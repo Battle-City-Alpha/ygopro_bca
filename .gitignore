@@ -46,3 +46,5 @@ premake5.exe
 /freetype/src/
 /gframe/boosters.cpp
 /gframe/boosters.h
+/scripts/
+/ocgcore/
