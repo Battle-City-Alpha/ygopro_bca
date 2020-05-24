@@ -48,3 +48,8 @@ premake5.exe
 /gframe/boosters.h
 /scripts/
 /ocgcore/
+/lua/
+/out/
+/event/
+/sound/
+/sqlite3/
