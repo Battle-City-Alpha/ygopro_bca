@@ -24,6 +24,8 @@ Materials::Materials() {
 	SetS3DVertex(vFieldSpell, 1.2f, -3.2f, 6.7f, 3.2f, 0, 1, 0, 0, 1, 1);
 	SetS3DVertex(vFieldSpell1, 1.2f, 0.8f, 6.7f, 3.2f, 0, 1, 0, 0.2f, 1, 0.63636f);
 	SetS3DVertex(vFieldSpell2, 1.2f, -3.2f, 6.7f, -0.8f, 0, 1, 1, 0.63636f, 0, 0.2f);
+	SetS3DVertex(vFieldPartner1, 2.75f, 0.8f, 5.15f, 3.2f, 0, 1, 0, 0, 1, 1);
+	SetS3DVertex(vFieldPartner2, 2.75f, -3.2f, 5.15f, -0.8f, 0, 1, 1, 1, 0, 0);
 
 	/*
 	//background grids

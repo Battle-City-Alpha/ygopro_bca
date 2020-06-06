@@ -121,9 +121,13 @@ void Game::DrawBackGround() {
 			}
 		}
 	}
+
 	matManager.mTexture.setTexture(0, drawField ? imageManager.tFieldTransparent[rule] : imageManager.tField[rule]);
 	driver->setMaterial(matManager.mTexture);
 	driver->drawVertexPrimitiveList(matManager.vField, 4, matManager.iRectangle, 2);
+
+	DrawPartners();
+
 	driver->setMaterial(matManager.mBackLine);
 	//select field
 	if(dInfo.curMsg == MSG_SELECT_PLACE || dInfo.curMsg == MSG_SELECT_DISFIELD || dInfo.curMsg == MSG_HINT) {
@@ -1079,6 +1083,11 @@ void Game::DrawThumb(code_pointer cp, position2di pos, const std::unordered_map<
 			break;
 		}
 	}
+	if (!mainGame->chest.ContainsCard((cp->second.alias == 0) ? (cp->first) : (cp->second.alias))) {
+		driver->draw2DRectangle(irr::video::SColor::SColor(120, 0, 0, 0), Resize(pos.X, pos.Y, pos.X + CARD_THUMB_WIDTH, pos.Y + CARD_THUMB_HEIGHT));
+		driver->draw2DRectangleOutline(Resize(pos.X, pos.Y, pos.X + CARD_THUMB_WIDTH, pos.Y + CARD_THUMB_HEIGHT), 0xffff0000);
+		//driver->draw2DImage(imageManager.tNotOwn, mainGame->Resize(pos.X, pos.Y, pos.X + 20, pos.Y + 20), recti(0, 0, imageManager.tNotOwn->getOriginalSize().Width, imageManager.tNotOwn->getOriginalSize().Height), 0, 0, true);
+	}
 	if (mainGame->cbLimit->getSelected() >= 4 && (cp->second.ot & mainGame->gameConf.defaultOT)) {
 		switch (cp->second.ot) {
 		case 1:
@@ -1375,8 +1384,48 @@ bool Game::CheckBCATexturesLoaded()
 {
 	int n = dInfo.isTag ? 4 : 2;
 	for (int i = 0; i < n; i++)
-		if (!imageManager.tCover[i] || !imageManager.tAvatar[i] || !imageManager.tBorder[i])
+		if (!imageManager.tCover[i] || !imageManager.tAvatar[i] || !imageManager.tBorder[i] || !imageManager.tPartner[i])
 			return false;	
 	return true;
+}
+static void DrawPlayerPartner(IVideoDriver* driver, int player, bool opponent)
+{
+	ITexture* partner = imageManager.tPartner[player];
+
+	if (partner)
+	{
+		matManager.mTexture.setTexture(0, partner);
+		driver->setMaterial(matManager.mTexture);
+		if (opponent)
+			driver->drawVertexPrimitiveList(matManager.vFieldPartner2, 4, matManager.iRectangle, 2);
+		else
+			driver->drawVertexPrimitiveList(matManager.vFieldPartner1, 4, matManager.iRectangle, 2);
+	}
+}
+void Game::DrawPartners()
+{
+	int trueIds[4];
+	bool isHostTeam = DuelClient::IsHostTeam();
+	if (dInfo.isTag)
+	{
+		trueIds[0] = isHostTeam ? 0 : 2;
+		trueIds[1] = isHostTeam ? 1 : 3;
+		trueIds[2] = isHostTeam ? 2 : 0;
+		trueIds[3] = isHostTeam ? 3 : 1;
+	}
+	else
+	{
+		trueIds[0] = isHostTeam ? 0 : 1;
+		trueIds[2] = isHostTeam ? 1 : 0;
+	}
+
+	if (!dInfo.isTag || !dInfo.tag_player[0])
+		DrawPlayerPartner(driver, trueIds[0], false);
+	else
+		DrawPlayerPartner(driver, trueIds[1], false);
+	if (!dInfo.isTag || !dInfo.tag_player[1])
+		DrawPlayerPartner(driver, trueIds[2], true);
+	else
+		DrawPlayerPartner(driver, trueIds[3], true);
 }
 }

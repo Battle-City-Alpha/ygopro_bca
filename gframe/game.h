@@ -165,6 +165,7 @@ public:
 
 	void DrawAvatars();
 	void DrawBorders();
+	void DrawPartners();
 	void SwapCovers(bool force = false);
 	bool CheckBCATexturesLoaded();
 	bool IsCoverSwap;

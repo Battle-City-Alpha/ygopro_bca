@@ -42,6 +42,7 @@ bool ImageManager::Initial() {
 		tAvatar[i] = NULL;
 		tBorder[i] = NULL;
 		tCover[i] = NULL;
+		tPartner[i] = NULL;
 	}
 	return true;
 }
@@ -253,6 +254,7 @@ void ImageManager::LoadBCACustomTextures(bool force)
 	irr::s32 avatarWidth = AVATAR_SIZE * xScale;
 	irr::s32 avatarHeight = AVATAR_SIZE * yScale;
 
+
 	for (int i = 0; i < 4; ++i)
 	{
 		if (!tAvatar[i] || force) {
@@ -268,6 +270,12 @@ void ImageManager::LoadBCACustomTextures(bool force)
 		if (!tCover[i] || force) {
 			std::string coverpath = "textures/sleeves/s_" + std::to_string(i) + ".png";
 			tCover[i] = GetTextureFromFile(coverpath.c_str(), imgWidth, imgHeight);
+		}
+
+		if (!tPartner[i] || force)
+		{
+			std::string partnerpath = "textures/partners/p_" + std::to_string(i) + ".png";
+			tPartner[i] = GetTextureFromFile(partnerpath.c_str(), 256, 256);
 		}
 	}
 }
