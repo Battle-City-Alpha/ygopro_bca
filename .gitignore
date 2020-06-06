@@ -53,3 +53,4 @@ premake5.exe
 /event/
 /sound/
 /sqlite3/
+/script/
