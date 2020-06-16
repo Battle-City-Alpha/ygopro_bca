@@ -546,7 +546,7 @@ void Game::DrawMisc() {
 		textFont->draw(dInfo.clientname_tag, p2size, 0xffffffff, false, false, 0);
 	}
 
-	if (dInfo.isMatch && false)
+	if (dInfo.isMatch)
 	{
 		std::wstring wincounter = dataManager.GetNumString(wins[0]);
 		wincounter = L"W:" + wincounter;

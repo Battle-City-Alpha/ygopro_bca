@@ -463,6 +463,8 @@ void TagDuel::TPResult(DuelPlayer* dp, unsigned char tp) {
 	BufferIO::WriteInt16(pbuf, query_field_count(pduel, 0, 0x40));
 	BufferIO::WriteInt16(pbuf, query_field_count(pduel, 1, 0x1));
 	BufferIO::WriteInt16(pbuf, query_field_count(pduel, 1, 0x40));
+	BufferIO::WriteInt16(pbuf, 0);
+	BufferIO::WriteInt16(pbuf, 0);
 	NetServer::SendBufferToPlayer(players[0], STOC_GAME_MSG, startbuf, 19);
 	NetServer::ReSendToPlayer(players[1]);
 	startbuf[1] = 1;
