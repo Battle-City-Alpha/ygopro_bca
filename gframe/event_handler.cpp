@@ -1909,6 +1909,11 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 				return true;
 				break;
 			}
+			case CHECKBOX_SHOWPARTNERS: {
+				mainGame->gameConf.ShowPartner = mainGame->chkShowPartners->isChecked() ? 1 : 0;
+				return true;
+				break;
+			}
 			}
 			break;
 		}
@@ -1980,20 +1985,28 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 					break;
 				const wchar_t* input = mainGame->ebChatInput->getText();
 				if(input[0]) {
+
+					std::wstring item = mainGame->cbChatSelect->getItem(mainGame->cbChatSelect->getSelected());
+					std::wstring newmsg = input;
+					if (item == L"Watchers")
+						newmsg = L"/o " + newmsg;
+					else if (item == L"Tag Team")
+						newmsg = L"/t " + newmsg;
+
 					unsigned short msgbuf[256];
 					if (mainGame->dInfo.isStarted) {
 						if (mainGame->dInfo.player_type < 7) {
 							if (mainGame->dInfo.isTag && (mainGame->dInfo.player_type % 2))
-								mainGame->AddChatMsg((wchar_t*)input, 2, false);
+								mainGame->AddChatMsg(newmsg.c_str(), 2, false);
 							else
-								mainGame->AddChatMsg((wchar_t*)input, 0, false);
+								mainGame->AddChatMsg(newmsg.c_str(), 0, false);
 						}
 						else
-							mainGame->AddChatMsg((wchar_t*)input, 10, false);
+							mainGame->AddChatMsg(newmsg.c_str(), 10, false);
 					}
 					else
-						mainGame->AddChatMsg((wchar_t*)input, 7, false);
-					int len = BufferIO::CopyWStr(input, msgbuf, 256);
+						mainGame->AddChatMsg(newmsg.c_str(), 7, false);
+					int len = BufferIO::CopyWStr(newmsg.c_str(), msgbuf, 256);
 					DuelClient::SendBufferToServer(CTOS_CHAT, msgbuf, (len + 1) * sizeof(short));
 					mainGame->ebChatInput->setText(L"");
 					return true;

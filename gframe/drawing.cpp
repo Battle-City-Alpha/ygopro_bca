@@ -497,14 +497,14 @@ void Game::DrawMisc() {
 		driver->draw2DRectangle(0xa0000000, Resize(689, 8, 991, 51));
 		driver->draw2DRectangleOutline(Resize(689, 8, 991, 51), 0xffff8080);
 	}*/
-	driver->draw2DImage(imageManager.tLPFrame, Resize(330, 10, 629, 30), recti(0, 0, 200, 20), 0, 0, true);
-	driver->draw2DImage(imageManager.tLPFrame, Resize(691, 10, 990, 30), recti(0, 0, 200, 20), 0, 0, true);
+	//driver->draw2DImage(imageManager.tLPFrame, Resize(330, 10, 629, 30), recti(0, 0, 200, 20), 0, 0, true);
+	//driver->draw2DImage(imageManager.tLPFrame, Resize(691, 10, 990, 30), recti(0, 0, 200, 20), 0, 0, true);
 	if(dInfo.lp[0] >= 8000)
-		driver->draw2DImage(imageManager.tLPBar, Resize(335, 12, 625, 28), recti(0, 0, 16, 16), 0, 0, true);
-	else driver->draw2DImage(imageManager.tLPBar, Resize(335, 12, 335 + 290 * dInfo.lp[0] / 8000, 28), recti(0, 0, 16, 16), 0, 0, true);
+		driver->draw2DImage(imageManager.tLPBar, Resize(330, 12, 630, 28), recti(0, 0, 16, 16), 0, 0, true);
+	else driver->draw2DImage(imageManager.tLPBar, Resize(330, 12, 340 + 290 * dInfo.lp[0] / 8000, 28), recti(0, 0, 16, 16), 0, 0, true);
 	if(dInfo.lp[1] >= 8000)
-		driver->draw2DImage(imageManager.tLPBar, Resize(696, 12, 986, 28), recti(0, 0, 16, 16), 0, 0, true);
-	else driver->draw2DImage(imageManager.tLPBar, Resize(986 - 290 * dInfo.lp[1] / 8000, 12, 986, 28), recti(0, 0, 16, 16), 0, 0, true);
+		driver->draw2DImage(imageManager.tLPBar, Resize(691, 12, 990, 28), recti(0, 0, 16, 16), 0, 0, true);
+	else driver->draw2DImage(imageManager.tLPBar, Resize(990 - 295 * dInfo.lp[1] / 8000, 12, 986, 28), recti(0, 0, 16, 16), 0, 0, true);
 	if(lpframe) {
 		dInfo.lp[lpplayer] -= lpd;
 		myswprintf(dInfo.strLP[lpplayer], L"%d", dInfo.lp[lpplayer]);
@@ -545,6 +545,17 @@ void Game::DrawMisc() {
 		p2size.UpperLeftCorner.X -= cld.Width;
 		textFont->draw(dInfo.clientname_tag, p2size, 0xffffffff, false, false, 0);
 	}
+
+	if (dInfo.isMatch && false)
+	{
+		std::wstring wincounter = dataManager.GetNumString(wins[0]);
+		wincounter = L"W:" + wincounter;
+		DrawShadowText(lpcFont, wincounter.c_str(), Resize(330, 27 + AVATAR_SIZE + 5, 330 + AVATAR_SIZE, 27 + AVATAR_SIZE + 5 + 10), Resize(0, 0, 2, 0), mainGame->turncolor, 0x80000000, true, false, 0);
+		wincounter = dataManager.GetNumString(wins[1]);
+		wincounter = L"W:" + wincounter;
+		DrawShadowText(lpcFont, wincounter.c_str(), Resize(989 - AVATAR_SIZE, 27 + AVATAR_SIZE + 5, 989, 27 + AVATAR_SIZE + 5 + 10), Resize(0, 0, 2, 0), mainGame->turncolor, 0x80000000, true, false, 0);
+	}
+
 	//driver->draw2DRectangle(Resize(632, 10, 688, 30), 0x00000000, 0x00000000, 0xffffffff, 0xffffffff);
 	//driver->draw2DRectangle(Resize(632, 30, 688, 50), 0xffffffff, 0xffffffff, 0x00000000, 0x00000000);
 	DrawShadowText(lpcFont, dataManager.GetNumString(dInfo.turn), Resize(635, 5, 687, 40), Resize(0, 0, 2, 0), mainGame->turncolor, 0x80000000, true, false, 0);
@@ -1404,6 +1415,8 @@ static void DrawPlayerPartner(IVideoDriver* driver, int player, bool opponent)
 }
 void Game::DrawPartners()
 {
+	if (!mainGame->gameConf.ShowPartner)
+		return;
 	int trueIds[4];
 	bool isHostTeam = DuelClient::IsHostTeam();
 	if (dInfo.isTag)

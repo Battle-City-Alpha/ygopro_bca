@@ -482,6 +482,11 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 			mainGame->stHostPrepDuelist[2]->setVisible(true);
 			mainGame->stHostPrepDuelist[3]->setVisible(true);
 		} else {
+			if (pkt->info.mode == 1) {
+				mainGame->dInfo.isMatch = true;
+				mainGame->wins[0] = 0;
+				mainGame->wins[1] = 0;
+			}
 			mainGame->dInfo.isTag = false;
 			mainGame->chkHostPrepReady[2]->setVisible(false);
 			mainGame->chkHostPrepReady[3]->setVisible(false);
@@ -626,6 +631,18 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 			}
 		}
 		mainGame->dInfo.player_type = selftype;
+		if (mainGame->dInfo.player_type == 7) {
+			mainGame->cbChatSelect->clear();
+			mainGame->cbChatSelect->addItem(L"All");
+			mainGame->cbChatSelect->addItem(L"Watchers");
+		}
+		else {
+			mainGame->cbChatSelect->clear();
+			mainGame->cbChatSelect->addItem(L"All");
+		}
+		if (mainGame->dInfo.player_type < 7 && mainGame->dInfo.isTag)
+			mainGame->cbChatSelect->addItem(L"Tag Team");
+
 		break;
 	}
 	case STOC_DUEL_START: {
@@ -1212,6 +1229,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 		mainGame->showcarddif = 110;
 		mainGame->showcardp = 0;
 		mainGame->dInfo.vic_string = 0;
+
 		wchar_t vic_buf[256];
 		if(player == 2)
 			mainGame->showcardcode = 3;
@@ -1224,6 +1242,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			else
 				myswprintf(vic_buf, L"%ls", dataManager.GetVictoryString(type));
 			mainGame->dInfo.vic_string = vic_buf;
+			mainGame->wins[0]++;
 		} else {
 			mainGame->showcardcode = 2;
 			if(match_kill)
@@ -1233,6 +1252,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			else
 				myswprintf(vic_buf, L"%ls", dataManager.GetVictoryString(type));
 			mainGame->dInfo.vic_string = vic_buf;
+			mainGame->wins[1]++;
 		}
 		mainGame->showcard = 101;
 		mainGame->WaitFrameSignal(120);
@@ -1277,6 +1297,8 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 		deckc = BufferIO::ReadInt16(pbuf);
 		extrac = BufferIO::ReadInt16(pbuf);
 		mainGame->dField.Initial(mainGame->LocalPlayer(1), deckc, extrac);
+		mainGame->wins[DuelClient::IsHostTeam() ? 0 : 1] = BufferIO::ReadInt16(pbuf);
+		mainGame->wins[DuelClient::IsHostTeam() ? 1 : 0] = BufferIO::ReadInt16(pbuf);
 		mainGame->dInfo.turn = 0;
 		mainGame->dInfo.is_shuffling = false;
 		select_hint = 0;

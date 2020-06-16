@@ -66,6 +66,7 @@ struct Config {
 	bool forced;
 	bool show_booster_infos;
 	bool AutoCloseReplay;
+	bool ShowPartner;
 };
 
 struct DuelInfo {
@@ -93,6 +94,7 @@ struct DuelInfo {
 	unsigned short time_limit;
 	unsigned short time_left[2];
 	bool isReplaySwapped;
+	bool isMatch;
 };
 
 struct BotInfo {
@@ -256,6 +258,8 @@ public:
 
 	bool is_building;
 	bool is_siding;
+
+	unsigned short wins[2];
 
 	int displayedcard;
 	irr::core::dimension2d<irr::u32> window_size;
@@ -597,6 +601,10 @@ public:
 
 	irr::gui::IGUIButton* btnReloadBCATextures;
 	irr::gui::IGUIButton* btnSwapCovers;
+
+	irr::gui::IGUICheckBox* chkShowPartners;
+
+	irr::gui::IGUIComboBox* cbChatSelect;
 };
 
 extern Game* mainGame;
@@ -786,6 +794,8 @@ extern Game* mainGame;
 #define CHECKBOX_MULTI_KEYWORDS		372
 #define CHECKBOX_PREFER_EXPANSION	373
 
+#define COMBOBOX_CHATSELECT			888
+#define CHECKBOX_SHOWPARTNERS		889
 #define BUTTON_SWAP_COVERS			990
 #define BUTTON_RELOAD_TEXTURES		991
 #define CHECKBOX_SHOW_BOOSTER_INFOS			992

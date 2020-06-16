@@ -288,6 +288,8 @@ bool Game::Initialize() {
 	posY += 27;
 	chkAutoChain = env->addCheckBox(false, rect<s32>(posX, posY, posX + 260, posY + 25), tabHelper, -1, dataManager.GetSysString(1276));
 	chkAutoChain->setChecked(gameConf.chkAutoChain != 0);
+	chkShowPartners = env->addCheckBox(false, rect<s32>(posX + 150, posY, posX + 260, posY + 25), tabHelper, CHECKBOX_SHOWPARTNERS, dataManager.GetSysString(2991));
+	chkShowPartners->setChecked(gameConf.ShowPartner != 0);
 	posY += 27;
 	chkWaitChain = env->addCheckBox(false, rect<s32>(posX, posY, posX + 260, posY + 25), tabHelper, -1, dataManager.GetSysString(1277));
 	chkWaitChain->setChecked(gameConf.chkWaitChain != 0);
@@ -781,7 +783,8 @@ bool Game::Initialize() {
 	wChat->setDraggable(false);
 	wChat->setDrawTitlebar(false);
 	wChat->setVisible(false);
-	ebChatInput = env->addEditBox(L"", rect<s32>(3, 2, 710, 22), true, wChat, EDITBOX_CHAT);
+	ebChatInput = env->addEditBox(L"", rect<s32>(53, 2, 710, 22), true, wChat, EDITBOX_CHAT);
+	cbChatSelect = env->addComboBox(rect<s32>(3, 2, 50, 22), wChat, COMBOBOX_CHATSELECT);
 	//swap
 	btnSpectatorSwap = env->addButton(rect<s32>(205, 100, 295, 135), 0, BUTTON_REPLAY_SWAP, dataManager.GetSysString(1346));
 	btnSpectatorSwap->setVisible(false);
@@ -1186,6 +1189,7 @@ void Game::LoadConfig() {
 	gameConf.forced = false;
 	gameConf.show_booster_infos = true;
 	gameConf.AutoCloseReplay = false;
+	gameConf.ShowPartner = true;
 	while(fgets(linebuf, 256, fp)) {
 		sscanf(linebuf, "%s = %s", strbuf, valbuf);
 		if(!strcmp(strbuf, "antialias")) {
@@ -1298,6 +1302,9 @@ void Game::LoadConfig() {
 		else if (!strcmp(strbuf, "show_booster_infos")) {
 		gameConf.show_booster_infos = atof(valbuf);
 		}
+		else if (!strcmp(strbuf, "show_partner")) {
+		gameConf.ShowPartner = atof(valbuf);
+		}
 		else {
 			// options allowing multiple words
 			sscanf(linebuf, "%s = %240[^\n]", strbuf, valbuf);
@@ -1374,6 +1381,7 @@ void Game::SaveConfig() {
 	fprintf(fp, "forced = %d\n", gameConf.forced);
 	fprintf(fp, "show_booster_infos = %d\n", gameConf.show_booster_infos);
 	fprintf(fp, "autoclosereplay = %d\n", gameConf.AutoCloseReplay);
+	fprintf(fp, "show_partner = %d\n", gameConf.ShowPartner);
 #ifdef YGOPRO_USE_IRRKLANG
 	fprintf(fp, "enable_sound = %d\n", (chkEnableSound->isChecked() ? 1 : 0));
 	fprintf(fp, "enable_music = %d\n", (chkEnableMusic->isChecked() ? 1 : 0));
@@ -1750,7 +1758,8 @@ void Game::OnResize() {
 	btnClearLog->setRelativePosition(Resize(160, 300, 260, 325));
 
 	wChat->setRelativePosition(recti(wInfos->getRelativePosition().LowerRightCorner.X + 2, window_size.Height - 25, window_size.Width, window_size.Height));
-	ebChatInput->setRelativePosition(recti(3, 2, window_size.Width - wChat->getRelativePosition().UpperLeftCorner.X - 6, 22));
+	ebChatInput->setRelativePosition(recti(103, 2, window_size.Width - wChat->getRelativePosition().UpperLeftCorner.X - 6, 22));
+	cbChatSelect->setRelativePosition(recti(3, 2, 100, 22));
 
 	wReplayControl->setRelativePosition(Resize(205, 143, 295, 273));
 	btnReplayStart->setRelativePosition(Resize(5, 5, 85, 25));
@@ -1853,6 +1862,7 @@ void Game::OnResize() {
 	chkRandomPos->setRelativePosition(Resize(posX + 20, posY, posX + 20 + 260, posY + 25));
 	posY += 27;
 	chkAutoChain->setRelativePosition(Resize(posX, posY, posX + 260, posY + 25));
+	chkShowPartners->setRelativePosition(Resize(posX + 150, posY, posX + 260, posY + 25));
 	posY += 27;
 	chkWaitChain->setRelativePosition(Resize(posX, posY, posX + 260, posY + 25));
 	posY += 27;
