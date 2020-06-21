@@ -198,6 +198,8 @@ restart:
 			mainGame->btnCancelOrFinish->setVisible(false);
 			mainGame->btnShuffle->setVisible(false);
 			mainGame->wChat->setVisible(false);
+			mainGame->btnShowWatchers->setVisible(false);
+			mainGame->lstWatchers->setVisible(false);
 			mainGame->wPhase->setVisible(false);
 			mainGame->deckBuilder.Initialize(false);
 			mainGame->gMutex.unlock();

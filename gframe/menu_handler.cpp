@@ -199,6 +199,8 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				else
 					mainGame->ShowElement(mainGame->wLanWindow);
 				mainGame->wChat->setVisible(false);
+				mainGame->btnShowWatchers->setVisible(false);
+				mainGame->lstWatchers->setVisible(false);
 				if(exit_on_return)
 					mainGame->device->closeDevice();
 				break;
@@ -417,6 +419,10 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				mainGame->HideElement(mainGame->wReplaySave);
 				prev_operation = 0;
 				prev_sel = -1;
+				break;
+			}
+			case BUTTON_SHOW_WATCHERS: {
+				mainGame->lstWatchers->setVisible(mainGame->btnShowWatchers->isPressed());
 				break;
 			}
 			}

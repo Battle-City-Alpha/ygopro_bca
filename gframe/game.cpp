@@ -785,6 +785,13 @@ bool Game::Initialize() {
 	wChat->setVisible(false);
 	ebChatInput = env->addEditBox(L"", rect<s32>(53, 2, 710, 22), true, wChat, EDITBOX_CHAT);
 	cbChatSelect = env->addComboBox(rect<s32>(3, 2, 50, 22), wChat, COMBOBOX_CHATSELECT);
+
+	lstWatchers = env->addListBox(rect<s32>(1,1,1,1), 0);
+	lstWatchers->setVisible(false);
+	lstWatchers->setDrawBackground(false);
+	btnShowWatchers = env->addButton(rect<s32>(1,1,1,1), 0, BUTTON_SHOW_WATCHERS, dataManager.GetSysString(2990));
+	btnShowWatchers->setIsPushButton(true);
+	mainGame->btnShowWatchers->setVisible(false);
 	//swap
 	btnSpectatorSwap = env->addButton(rect<s32>(205, 100, 295, 135), 0, BUTTON_REPLAY_SWAP, dataManager.GetSysString(1346));
 	btnSpectatorSwap->setVisible(false);
@@ -1696,6 +1703,8 @@ void Game::CloseDuelWindow() {
 	btnSwapCovers->setVisible(false);
 	btnShuffle->setVisible(false);
 	wChat->setVisible(false);
+	mainGame->btnShowWatchers->setVisible(false);
+	mainGame->lstWatchers->setVisible(false);
 	lstLog->clear();
 	logParam.clear();
 	lstHostList->clear();
@@ -1760,6 +1769,9 @@ void Game::OnResize() {
 	wChat->setRelativePosition(recti(wInfos->getRelativePosition().LowerRightCorner.X + 2, window_size.Height - 25, window_size.Width, window_size.Height));
 	ebChatInput->setRelativePosition(recti(103, 2, window_size.Width - wChat->getRelativePosition().UpperLeftCorner.X - 6, 22));
 	cbChatSelect->setRelativePosition(recti(3, 2, 100, 22));
+
+	lstWatchers->setRelativePosition(recti(wChat->getAbsolutePosition().UpperLeftCorner.X, ebChatInput->getAbsolutePosition().UpperLeftCorner.Y - 105, cbChatSelect->getAbsolutePosition().LowerRightCorner.X, ebChatInput->getAbsolutePosition().UpperLeftCorner.Y - 25));
+	btnShowWatchers->setRelativePosition(recti(wChat->getAbsolutePosition().UpperLeftCorner.X, ebChatInput->getAbsolutePosition().UpperLeftCorner.Y - 30, cbChatSelect->getAbsolutePosition().LowerRightCorner.X, ebChatInput->getAbsolutePosition().UpperLeftCorner.Y - 5));
 
 	wReplayControl->setRelativePosition(Resize(205, 143, 295, 273));
 	btnReplayStart->setRelativePosition(Resize(5, 5, 85, 25));

@@ -490,6 +490,9 @@ public:
 	irr::gui::IGUIEditBox* ebChatInput;
 	irr::gui::IGUICheckBox* chkIgnore1;
 	irr::gui::IGUICheckBox* chkIgnore2;
+	//watchers window
+	irr::gui::IGUIListBox* lstWatchers;
+	irr::gui::IGUIButton* btnShowWatchers;
 	//phase button
 	irr::gui::IGUIStaticText* wPhase;
 	irr::gui::IGUIButton* btnPhaseStatus;
@@ -794,6 +797,7 @@ extern Game* mainGame;
 #define CHECKBOX_MULTI_KEYWORDS		372
 #define CHECKBOX_PREFER_EXPANSION	373
 
+#define BUTTON_SHOW_WATCHERS		887
 #define COMBOBOX_CHATSELECT			888
 #define CHECKBOX_SHOWPARTNERS		889
 #define BUTTON_SWAP_COVERS			990

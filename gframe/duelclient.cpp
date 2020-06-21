@@ -193,6 +193,8 @@ void DuelClient::ClientEvent(bufferevent *bev, short events, void *ctx) {
 					else
 						mainGame->ShowElement(mainGame->wLanWindow);
 					mainGame->wChat->setVisible(false);
+					mainGame->btnShowWatchers->setVisible(false);
+					mainGame->lstWatchers->setVisible(false);
 					soundManager.PlaySoundEffect(SOUND_INFO);
 					if (events & BEV_EVENT_EOF) {
 						//mainGame->env->addMessageBox(L"", dataManager.GetSysString(1401));
@@ -401,6 +403,8 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 		mainGame->is_building = true;
 		mainGame->is_siding = true;
 		mainGame->wChat->setVisible(false);
+		mainGame->btnShowWatchers->setVisible(false);
+		mainGame->lstWatchers->setVisible(false);
 		mainGame->wPhase->setVisible(false);
 		mainGame->wDeckEdit->setVisible(false);
 		mainGame->wFilter->setVisible(false);
@@ -411,7 +415,7 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 		mainGame->btnSideSort->setVisible(true);
 		mainGame->btnSideReload->setVisible(true);
 		if(mainGame->dInfo.player_type < 7)
-			mainGame->btnLeaveGame->setVisible(false);
+			mainGame->btnLeaveGame->setVisible(false); 
 		mainGame->btnSpectatorSwap->setVisible(false);
 		mainGame->btnChainIgnore->setVisible(false);
 		mainGame->btnChainAlways->setVisible(false);
@@ -420,6 +424,8 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 		mainGame->btnReloadBCATextures->setVisible(false);
 		mainGame->btnSwapCovers->setVisible(false);
 		mainGame->btnShuffle->setVisible(false);
+		mainGame->btnShowWatchers->setVisible(false);
+		mainGame->lstWatchers->setVisible(false);
 		mainGame->deckBuilder.result_string[0] = L'0';
 		mainGame->deckBuilder.result_string[1] = 0;
 		mainGame->deckBuilder.results.clear();
@@ -518,8 +524,10 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 		else if(mainGame->wSinglePlay->isVisible())
 			mainGame->HideElement(mainGame->wSinglePlay);
 		mainGame->ShowElement(mainGame->wHostPrepare);
-		if(!mainGame->chkIgnore1->isChecked())
+		if (!mainGame->chkIgnore1->isChecked())
+		{
 			mainGame->wChat->setVisible(true);
+		}
 		mainGame->gMutex.unlock();
 		mainGame->dInfo.duel_rule = pkt->info.duel_rule;
 		watching = 0;
@@ -674,17 +682,18 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 		mainGame->btnM2->setVisible(false);
 		mainGame->btnEP->setVisible(false);
 		mainGame->btnShuffle->setVisible(false);
-		if(!mainGame->chkIgnore1->isChecked())
+		if (!mainGame->chkIgnore1->isChecked()) {
 			mainGame->wChat->setVisible(true);
+		}
 		mainGame->device->setEventReceiver(&mainGame->dField);
 		if(!mainGame->dInfo.isTag) {
+			mainGame->btnReloadBCATextures->setVisible(true);
+			mainGame->btnSwapCovers->setVisible(true);
 			if(selftype > 1) {
 				mainGame->dInfo.player_type = 7;
 				mainGame->btnLeaveGame->setText(dataManager.GetSysString(1350));
-				mainGame->btnLeaveGame->setVisible(true);
+				mainGame->btnLeaveGame->setVisible(true); 
 				mainGame->btnSpectatorSwap->setVisible(true);
-				mainGame->btnReloadBCATextures->setVisible(true);
-				mainGame->btnSwapCovers->setVisible(true);
 			}
 			if(selftype != 1) {
 				BufferIO::CopyWStr(mainGame->stHostPrepDuelist[0]->getText(), mainGame->dInfo.hostname, 20);
@@ -694,6 +703,8 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 				BufferIO::CopyWStr(mainGame->stHostPrepDuelist[0]->getText(), mainGame->dInfo.clientname, 20);
 			}
 		} else {
+			mainGame->btnReloadBCATextures->setVisible(true);
+			mainGame->btnSwapCovers->setVisible(true);
 			if(selftype > 3) {
 				mainGame->dInfo.player_type = 7;
 				mainGame->btnLeaveGame->setText(dataManager.GetSysString(1350));
@@ -732,6 +743,8 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 		mainGame->btnReloadBCATextures->setVisible(false);
 		mainGame->btnSwapCovers->setVisible(false);
 		mainGame->wSurrender->setVisible(false);
+		mainGame->btnShowWatchers->setVisible(false);
+		mainGame->lstWatchers->setVisible(false);
 		mainGame->stMessage->setText(dataManager.GetSysString(1500));
 		mainGame->PopupElement(mainGame->wMessage);
 		mainGame->gMutex.unlock();
@@ -769,6 +782,8 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 		if(mainGame->dInfo.player_type < 7)
 			mainGame->btnLeaveGame->setVisible(false);
 		mainGame->btnChainIgnore->setVisible(false);
+		mainGame->btnShowWatchers->setVisible(false);
+		mainGame->lstWatchers->setVisible(false);
 		mainGame->btnChainAlways->setVisible(false);
 		mainGame->btnChainWhenAvail->setVisible(false);
 		mainGame->btnCancelOrFinish->setVisible(false);
@@ -930,6 +945,8 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 					DuelClient::StopClient();
 					mainGame->HideElement(mainGame->wHostPrepare);
 					mainGame->wChat->setVisible(false);
+					mainGame->btnShowWatchers->setVisible(false);
+					mainGame->lstWatchers->setVisible(false);
 				}
 			}
 		} else if(state == PLAYERCHANGE_LEAVE) {
@@ -963,6 +980,46 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 		myswprintf(watchbuf, L"%ls%d", dataManager.GetSysString(1253), watching);
 		mainGame->gMutex.lock();
 		mainGame->stHostPrepOB->setText(watchbuf);
+		mainGame->gMutex.unlock();
+		break;
+	}
+	case STOC_UPDATE_WATCHER: {
+		bool add = BufferIO::ReadInt8(pdata);
+		int count = BufferIO::ReadInt16(pdata);
+		mainGame->gMutex.lock();
+		for (int i = 0; i < count; i++)
+		{
+			byte username[40];
+			for (int j = 0; j < 40; j++)
+			{
+				username[j] = BufferIO::ReadInt8(pdata);
+			}
+			if (add)
+				mainGame->lstWatchers->addItem((wchar_t*)username);
+			else {
+				int seekIndex = -1;
+				for (int index = 0; index < mainGame->lstWatchers->getItemCount(); index++)
+				{
+					const wchar_t* item = mainGame->lstWatchers->getListItem(index);
+					if (!wcscmp(item,(wchar_t*)username))
+					{
+						seekIndex = index;
+						break;
+					}
+				}
+				if (seekIndex != -1)
+					mainGame->lstWatchers->removeItem(seekIndex);
+			}
+		}
+		if (mainGame->lstWatchers->getItemCount() > 0) {
+			int uppersize = mainGame->ebChatInput->getAbsolutePosition().UpperLeftCorner.Y - 25 - (mainGame->lstWatchers->getItemCount() * 30);
+			if (uppersize < mainGame->wInfos->getAbsolutePosition().UpperLeftCorner.Y)
+				uppersize = mainGame->wInfos->getAbsolutePosition().UpperLeftCorner.Y;
+			mainGame->lstWatchers->setRelativePosition(recti(mainGame->wChat->getAbsolutePosition().UpperLeftCorner.X, uppersize, mainGame->cbChatSelect->getAbsolutePosition().LowerRightCorner.X, mainGame->ebChatInput->getAbsolutePosition().UpperLeftCorner.Y - 25));
+			mainGame->btnShowWatchers->setVisible(true);
+		}
+		else
+			mainGame->btnShowWatchers->setVisible(false);
 		mainGame->gMutex.unlock();
 		break;
 	}

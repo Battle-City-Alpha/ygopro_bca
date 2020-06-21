@@ -138,6 +138,8 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 					mainGame->btnReloadBCATextures->setVisible(false);
 					mainGame->btnSwapCovers->setVisible(false);
 					mainGame->wChat->setVisible(false);
+					mainGame->btnShowWatchers->setVisible(false);
+					mainGame->lstWatchers->setVisible(false);
 					mainGame->btnCreateHost->setEnabled(true);
 					mainGame->btnJoinHost->setEnabled(true);
 					mainGame->btnJoinCancel->setEnabled(true);
@@ -827,6 +829,10 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 			}
 			case BUTTON_CARD_DISP_OK: {
 				mainGame->HideElement(mainGame->wCardDisplay);
+				break;
+			}
+			case BUTTON_SHOW_WATCHERS: {
+				mainGame->lstWatchers->setVisible(mainGame->btnShowWatchers->isPressed());
 				break;
 			}
 			}
@@ -1889,6 +1895,8 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 			case CHECKBOX_DISABLE_CHAT: {
 				bool show = mainGame->is_building ? false : !mainGame->chkIgnore1->isChecked();
 				mainGame->wChat->setVisible(show);
+				mainGame->btnShowWatchers->setVisible(show);
+				mainGame->lstWatchers->setVisible(false);
 				if(!show)
 					mainGame->ClearChatMsg();
 				return true;

@@ -965,9 +965,9 @@ void Game::DrawSpec() {
 				continue;
 			int w = guiFont->getDimension(chatMsg[i].c_str()).Width;
 
-			recti rectloc(mainGame->wChat->getRelativePosition().UpperLeftCorner.X, mainGame->window_size.Height - 45, mainGame->wChat->getRelativePosition().UpperLeftCorner.X + 2 + w, mainGame->window_size.Height - 25);
+			recti rectloc(mainGame->wChat->getRelativePosition().UpperLeftCorner.X + mainGame->cbChatSelect->getAbsolutePosition().getWidth(), mainGame->window_size.Height - 45, mainGame->wChat->getRelativePosition().UpperLeftCorner.X + 2 + w + mainGame->cbChatSelect->getAbsolutePosition().getWidth(), mainGame->window_size.Height - 25);
 			rectloc -= position2di(0, i * 20);
-			recti msgloc(mainGame->wChat->getRelativePosition().UpperLeftCorner.X, mainGame->window_size.Height - 45, mainGame->wChat->getRelativePosition().UpperLeftCorner.X - 4, mainGame->window_size.Height - 25);
+			recti msgloc(mainGame->wChat->getRelativePosition().UpperLeftCorner.X + mainGame->cbChatSelect->getAbsolutePosition().getWidth(), mainGame->window_size.Height - 45, mainGame->wChat->getRelativePosition().UpperLeftCorner.X - 4, mainGame->window_size.Height - 25);
 			msgloc -= position2di(0, i * 20);
 			recti shadowloc = msgloc + position2di(1, 1);
 
