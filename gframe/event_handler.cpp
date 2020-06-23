@@ -2062,6 +2062,12 @@ bool ClientField::OnCommonEvent(const irr::SEvent& event) {
 			return true;
 			break;
 		}
+		case irr::KEY_F11: {
+			if (!event.KeyInput.PressedDown) {
+				mainGame->ToggleFullscreen(mainGame->device, mainGame->gameConf.FullScreen);
+			}
+			return true;
+		}
 		case irr::KEY_ESCAPE: {
 			if(!mainGame->HasFocus(EGUIET_EDIT_BOX))
 				mainGame->device->minimizeWindow();

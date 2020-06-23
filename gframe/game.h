@@ -67,6 +67,7 @@ struct Config {
 	bool show_booster_infos;
 	bool AutoCloseReplay;
 	bool ShowPartner;
+	bool FullScreen;
 };
 
 struct DuelInfo {
@@ -194,6 +195,7 @@ public:
 	void LaunchBot(std::wstring deck, std::wstring name = L"Kaibot", std::wstring dialog = L"fr-FR");
 	void UpdatewCreateHostWithBot();
 	void RefreshBotDeck(irr::gui::IGUIComboBox* cbBotDeck);
+	void ToggleFullscreen(irr::IrrlichtDevice* device, bool& fullscreen);
 
 	void SetWindowsIcon();
 	void SetWindowsScale(float scale);

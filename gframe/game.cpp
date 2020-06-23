@@ -860,6 +860,10 @@ bool Game::Initialize() {
 	hideChat = false;
 	hideChatTimer = 0;
 	IsCoverSwap = false;
+	if (mainGame->gameConf.FullScreen) {
+		bool currentlyFullscreen = false;
+		ToggleFullscreen(device, currentlyFullscreen);
+	}
 	return true;
 }
 void Game::MainLoop() {
@@ -1197,6 +1201,7 @@ void Game::LoadConfig() {
 	gameConf.show_booster_infos = true;
 	gameConf.AutoCloseReplay = false;
 	gameConf.ShowPartner = true;
+	gameConf.FullScreen = false;
 	while(fgets(linebuf, 256, fp)) {
 		sscanf(linebuf, "%s = %s", strbuf, valbuf);
 		if(!strcmp(strbuf, "antialias")) {
@@ -1312,6 +1317,9 @@ void Game::LoadConfig() {
 		else if (!strcmp(strbuf, "show_partner")) {
 		gameConf.ShowPartner = atof(valbuf);
 		}
+		else if (!strcmp(strbuf, "fullscreen")) {
+		gameConf.FullScreen = atof(valbuf);
+		}
 		else {
 			// options allowing multiple words
 			sscanf(linebuf, "%s = %240[^\n]", strbuf, valbuf);
@@ -1379,8 +1387,10 @@ void Game::SaveConfig() {
 	fprintf(fp, "auto_save_replay = %d\n", (chkAutoSaveReplay->isChecked() ? 1 : 0));
 	fprintf(fp, "prefer_expansion_script = %d\n", gameConf.prefer_expansion_script);
 	fprintf(fp, "window_maximized = %d\n", (gameConf.window_maximized ? 1 : 0));
-	fprintf(fp, "window_width = %d\n", gameConf.window_width);
-	fprintf(fp, "window_height = %d\n", gameConf.window_height);
+	if (!gameConf.FullScreen) {
+		fprintf(fp, "window_width = %d\n", gameConf.window_width);
+		fprintf(fp, "window_height = %d\n", gameConf.window_height);
+	}
 	fprintf(fp, "resize_popup_menu = %d\n", gameConf.resize_popup_menu ? 1 : 0);
 	fprintf(fp, "skin_index = %d\n", gameConf.skin_index);
 	fprintf(fp, "shuffle_deck_test_hand = %d\n", gameConf.shuffle_deck_test_hand);
@@ -1389,6 +1399,7 @@ void Game::SaveConfig() {
 	fprintf(fp, "show_booster_infos = %d\n", gameConf.show_booster_infos);
 	fprintf(fp, "autoclosereplay = %d\n", gameConf.AutoCloseReplay);
 	fprintf(fp, "show_partner = %d\n", gameConf.ShowPartner);
+	fprintf(fp, "fullscreen = %d\n", gameConf.FullScreen);
 #ifdef YGOPRO_USE_IRRKLANG
 	fprintf(fp, "enable_sound = %d\n", (chkEnableSound->isChecked() ? 1 : 0));
 	fprintf(fp, "enable_music = %d\n", (chkEnableMusic->isChecked() ? 1 : 0));
@@ -2158,6 +2169,50 @@ void Game::RefreshBotDeck(irr::gui::IGUIComboBox* cbDeck) {
 			cbDeck->addItem(decknameformat.substr(3).c_str());
 		}
 	});
+}
+void Game::ToggleFullscreen(irr::IrrlichtDevice* device, bool& fullscreen) {
+#ifdef _WIN32
+	static WINDOWPLACEMENT nonFullscreenSize;
+	static LONG nonFullscreenStyle;
+	static constexpr LONG_PTR fullscreenStyle = WS_POPUP | WS_SYSMENU | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
+	static const std::vector<RECT> monitors = []() {
+		std::vector<RECT> ret;
+		EnumDisplayMonitors(0, 0, [](HMONITOR hMon, HDC hdc, LPRECT lprcMonitor, LPARAM pData) -> BOOL {
+			auto monitors = reinterpret_cast<std::vector<RECT>*>(pData);
+			monitors->push_back(*lprcMonitor);
+			return TRUE;
+			}, (LPARAM)&ret);
+		return ret;
+	}();
+	fullscreen = !fullscreen;
+	const auto driver = device->getVideoDriver();
+	HWND hWnd = reinterpret_cast<HWND>(driver->getExposedVideoData().D3D9.HWnd);
+	RECT clientSize = {};
+	if (fullscreen) {
+		GetWindowPlacement(hWnd, &nonFullscreenSize);
+		nonFullscreenStyle = GetWindowLong(hWnd, GWL_STYLE);
+		static RECT curSize;
+		GetWindowRect(hWnd, &curSize);
+		for (const auto& rect : monitors) {
+			POINT windowCenter = { (curSize.left + (curSize.right - curSize.left) / 2), (curSize.top + (curSize.bottom - curSize.top) / 2) };
+			if (PtInRect(&rect, windowCenter)) {
+				clientSize = rect;
+				break;
+			}
+		}
+		if (!SetWindowLongPtr(hWnd, GWL_STYLE, fullscreenStyle))
+			ErrorLog("Could not change window style.");
+
+		const auto width = clientSize.right - clientSize.left;
+		const auto height = clientSize.bottom - clientSize.top;
+
+		SetWindowPos(hWnd, HWND_TOP, clientSize.left, clientSize.top, width, height, SWP_FRAMECHANGED | SWP_SHOWWINDOW);
+	}
+	else {
+		SetWindowPlacement(hWnd, &nonFullscreenSize);
+		SetWindowLongPtr(hWnd, GWL_STYLE, nonFullscreenStyle);
+	}
+#endif
 }
 }
 
