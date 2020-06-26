@@ -299,6 +299,10 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 				myswprintf(msgbuf, dataManager.GetSysString(1499), dataManager.GetName(code));
 				break;
 			}
+			case DECKERROR_MRERROR: {
+				myswprintf(msgbuf, dataManager.GetSysString(1498), dataManager.GetName(code));
+				break;
+			}
 			case DECKERROR_OCGONLY: {
 				myswprintf(msgbuf, dataManager.GetSysString(1413), dataManager.GetName(code));
 				break;
@@ -336,9 +340,9 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 			}
 			}
 			soundManager.PlaySoundEffect(SOUND_INFO);
-			mainGame->stACMessage->setText(msgbuf);
-			mainGame->PopupElement(mainGame->wACMessage, 100);
-			//mainGame->env->addMessageBox(L"", msgbuf);
+			//mainGame->stACMessage->setText(msgbuf);
+			//mainGame->PopupElement(mainGame->wACMessage, 100);
+			mainGame->env->addMessageBox(L"", msgbuf);
 			mainGame->cbDeckSelect->setEnabled(true);
 			mainGame->gMutex.unlock();
 			break;
@@ -469,7 +473,7 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 		myswprintf(msgbuf, L"%ls%d\n", dataManager.GetSysString(1233), pkt->info.draw_count);
 		str.append(msgbuf);
 		if(pkt->info.duel_rule != DEFAULT_DUEL_RULE) {
-			myswprintf(msgbuf, L"*%ls\n", dataManager.GetSysString(1260 + pkt->info.duel_rule - 1));
+			myswprintf(msgbuf, L"*%ls\n", dataManager.GetSysString(1259 + pkt->info.duel_rule));
 			str.append(msgbuf);
 		}
 		if(pkt->info.no_check_deck) {
@@ -1022,6 +1026,73 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 			mainGame->btnShowWatchers->setVisible(false);
 		mainGame->gMutex.unlock();
 		break;
+	}
+	case STOC_DECK_ERROR: {
+		mainGame->gMutex.lock();
+		int errortype = BufferIO::ReadInt32(pdata);
+		int reason = BufferIO::ReadInt32(pdata);
+		wchar_t msgbuf[256];
+		switch (errortype)
+		{
+		case DECKERROR_LFLIST: {
+			myswprintf(msgbuf, dataManager.GetSysString(1407), dataManager.GetName(reason));
+			break;
+		}
+		case DECKERROR_OCGONLY: {
+			myswprintf(msgbuf, dataManager.GetSysString(1413), dataManager.GetName(reason));
+			break;
+		}
+		case DECKERROR_TCGONLY: {
+			myswprintf(msgbuf, dataManager.GetSysString(1414), dataManager.GetName(reason));
+			break;
+		}
+		case DECKERROR_UNKNOWNCARD: {
+			myswprintf(msgbuf, dataManager.GetSysString(1415), dataManager.GetName(reason), reason);
+			break;
+		}
+		case DECKERROR_CARDCOUNT: {
+			myswprintf(msgbuf, dataManager.GetSysString(1416), dataManager.GetName(reason));
+			break;
+		}
+		case DECKERROR_MAINCOUNT: {
+			myswprintf(msgbuf, dataManager.GetSysString(1417), reason);
+			break;
+		}
+		case DECKERROR_EXTRACOUNT: {
+			if (reason > 0)
+				myswprintf(msgbuf, dataManager.GetSysString(1418), reason);
+			else
+				myswprintf(msgbuf, dataManager.GetSysString(1420));
+			break;
+		}
+		case DECKERROR_SIDECOUNT: {
+			myswprintf(msgbuf, dataManager.GetSysString(1419), reason);
+			break;
+		}
+		case DECKERROR_BCAERROR: {
+			myswprintf(msgbuf, dataManager.GetSysString(1499), dataManager.GetName(reason));
+			break;
+		}
+		case DECKERROR_MRERROR: {
+			myswprintf(msgbuf, dataManager.GetSysString(1498), dataManager.GetName(reason));
+			break;
+		}
+		case DECKERROR_TURBODUEL: {
+			myswprintf(msgbuf, dataManager.GetSysString(1497), dataManager.GetName(reason));
+			break;
+		}
+		default: {
+			myswprintf(msgbuf, dataManager.GetSysString(1406));
+			break;
+		}
+		}
+		soundManager.PlaySoundEffect(SOUND_INFO);
+		//mainGame->stACMessage->setText(msgbuf);
+		//mainGame->PopupElement(mainGame->wACMessage, 100);
+		mainGame->env->addMessageBox(L"", msgbuf);
+		mainGame->cbDeckSelect->setEnabled(true);
+		mainGame->gMutex.unlock();
+		break;	
 	}
 	}
 }

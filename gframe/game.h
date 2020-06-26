@@ -610,6 +610,8 @@ public:
 	irr::gui::IGUICheckBox* chkShowPartners;
 
 	irr::gui::IGUIComboBox* cbChatSelect;
+
+	irr::gui::IGUIComboBox* cbMRSelect;
 };
 
 extern Game* mainGame;
@@ -799,6 +801,7 @@ extern Game* mainGame;
 #define CHECKBOX_MULTI_KEYWORDS		372
 #define CHECKBOX_PREFER_EXPANSION	373
 
+#define COMBOBOX_MRSELECT			886
 #define BUTTON_SHOW_WATCHERS		887
 #define COMBOBOX_CHATSELECT			888
 #define CHECKBOX_SHOWPARTNERS		889

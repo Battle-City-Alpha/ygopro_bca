@@ -154,12 +154,13 @@ bool Game::Initialize() {
 	env->addStaticText(dataManager.GetSysString(1228), rect<s32>(20, 150, 320, 170), false, false, wCreateHost);
 	env->addStaticText(dataManager.GetSysString(1236), rect<s32>(20, 180, 220, 200), false, false, wCreateHost);
 	cbDuelRule = env->addComboBox(rect<s32>(140, 175, 300, 200), wCreateHost);
+	cbDuelRule->addItem(dataManager.GetSysString(1259));
 	cbDuelRule->addItem(dataManager.GetSysString(1260));
 	cbDuelRule->addItem(dataManager.GetSysString(1261));
 	cbDuelRule->addItem(dataManager.GetSysString(1262));
 	cbDuelRule->addItem(dataManager.GetSysString(1263));
 	cbDuelRule->addItem(dataManager.GetSysString(1264));
-	cbDuelRule->setSelected(gameConf.default_rule - 1);
+	cbDuelRule->setSelected(gameConf.default_rule);
 
 	chkNoCheckDeck = env->addCheckBox(false, rect<s32>(20, 210, 170, 230), wCreateHost, -1, dataManager.GetSysString(1229));
 	chkNoShuffleDeck = env->addCheckBox(false, rect<s32>(180, 210, 360, 230), wCreateHost, -1, dataManager.GetSysString(1230));
@@ -572,6 +573,16 @@ bool Game::Initialize() {
 	stBanlist = env->addStaticText(dataManager.GetSysString(1300), rect<s32>(10, 9, 100, 29), false, false, wDeckEdit);
 	cbDBLFList = env->addComboBox(rect<s32>(80, 5, 220, 30), wDeckEdit, COMBOBOX_DBLFLIST);
 	cbDBLFList->setMaxSelectionRows(10);
+
+	cbMRSelect = env->addComboBox(rect<s32>(225, 5, 290, 30), wDeckEdit, COMBOBOX_MRSELECT);
+	cbMRSelect->addItem(L"MR5");
+	cbMRSelect->addItem(L"MR4");
+	cbMRSelect->addItem(L"MR3");
+	cbMRSelect->addItem(L"MR2");
+	cbMRSelect->addItem(L"MR1");
+	cbMRSelect->addItem(L"MR0");
+	cbRule->setSelected(0);
+
 	stDeck = env->addStaticText(dataManager.GetSysString(1301), rect<s32>(10, 39, 100, 59), false, false, wDeckEdit);
 	cbDBDecks = env->addComboBox(rect<s32>(80, 35, 220, 60), wDeckEdit, COMBOBOX_DBDECKS);
 	cbDBDecks->setMaxSelectionRows(15);
@@ -1806,6 +1817,7 @@ void Game::OnResize() {
 
 	wDeckEdit->setRelativePosition(Resize(309, 8, 605, 130));
 	cbDBLFList->setRelativePosition(Resize(80, 5, 223, 30));
+	cbMRSelect->setRelativePosition(Resize(225, 5, 290, 30));
 	cbDBDecks->setRelativePosition(Resize(80, 35, 223, 60));
 	btnClearDeck->setRelativePosition(Resize(109, 99, 154, 120));
 	btnSortDeck->setRelativePosition(Resize(62, 99, 107, 120));
@@ -2154,7 +2166,8 @@ void Game::UpdatewCreateHostWithBot()
 {
 	cbRule->setVisible(false);
 	cbMatchMode->removeItem(2); 
-	stRule->setText(dataManager.GetSysString(2994));
+	stRule->setText(dataManager.GetSysString(2994)); 
+	ebTimeLimit->setText(L"0");
 }
 void Game::RefreshBotDeck(irr::gui::IGUIComboBox* cbDeck) {
 	cbDeck->clear();

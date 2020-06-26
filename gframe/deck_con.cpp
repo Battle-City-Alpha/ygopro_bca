@@ -532,6 +532,7 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 			case COMBOBOX_RACE:
 			case COMBOBOX_LIMIT:
 			case COMBOBOX_BOOSTERS:
+			case COMBOBOX_MRSELECT:
 				InstantSearch();
 			}
 		}
@@ -908,6 +909,8 @@ void DeckBuilder::FilterCards() {
 		const CardString& text = strpointer->second;
 		int code = data.alias == 0 ? data.code : data.alias;
 		if (!mainGame->chest.ContainsCard(code) && mainGame->chkSearchBCACardsOnly->isChecked())
+			continue;
+		if (mainGame->cbMRSelect->getSelected() != 0 && !mainGame->boosters.MRContainsCard(5 - mainGame->cbMRSelect->getSelected(), code))
 			continue;
 
 		if (isBoosterSearch && !mainGame->boosters.CheckCard(pstr, code, true))
