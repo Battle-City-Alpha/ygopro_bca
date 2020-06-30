@@ -1099,6 +1099,12 @@ void Game::DrawThumb(code_pointer cp, position2di pos, const std::unordered_map<
 		driver->draw2DRectangleOutline(Resize(pos.X, pos.Y, pos.X + CARD_THUMB_WIDTH, pos.Y + CARD_THUMB_HEIGHT), 0xffff0000);
 		//driver->draw2DImage(imageManager.tNotOwn, mainGame->Resize(pos.X, pos.Y, pos.X + 20, pos.Y + 20), recti(0, 0, imageManager.tNotOwn->getOriginalSize().Width, imageManager.tNotOwn->getOriginalSize().Height), 0, 0, true);
 	}
+	if (mainGame->cbMRSelect->getSelected() != 0 && !mainGame->boosters.MRContainsCard(5 - mainGame->cbMRSelect->getSelected(), (cp->second.alias == 0) ? (cp->first) : (cp->second.alias)))
+	{
+		driver->draw2DRectangle(irr::video::SColor::SColor(120, 255, 165, 0), Resize(pos.X, pos.Y, pos.X + CARD_THUMB_WIDTH, pos.Y + CARD_THUMB_HEIGHT));
+		driver->draw2DRectangleOutline(Resize(pos.X, pos.Y, pos.X + CARD_THUMB_WIDTH, pos.Y + CARD_THUMB_HEIGHT), 0xffff0000);
+		//driver->draw2DImage(imageManager.tNotOwn, mainGame->Resize(pos.X, pos.Y, pos.X + 20, pos.Y + 20), recti(0, 0, imageManager.tNotOwn->getOriginalSize().Width, imageManager.tNotOwn->getOriginalSize().Height), 0, 0, true);
+	}
 	if (mainGame->cbLimit->getSelected() >= 4 && (cp->second.ot & mainGame->gameConf.defaultOT)) {
 		switch (cp->second.ot) {
 		case 1:

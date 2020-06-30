@@ -340,9 +340,9 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 			}
 			}
 			soundManager.PlaySoundEffect(SOUND_INFO);
-			//mainGame->stACMessage->setText(msgbuf);
-			//mainGame->PopupElement(mainGame->wACMessage, 100);
-			mainGame->env->addMessageBox(L"", msgbuf);
+			mainGame->stACMessage->setText(msgbuf);
+			mainGame->PopupElement(mainGame->wACMessage, 100);
+			//mainGame->env->addMessageBox(L"", msgbuf);
 			mainGame->cbDeckSelect->setEnabled(true);
 			mainGame->gMutex.unlock();
 			break;
@@ -1087,9 +1087,9 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 		}
 		}
 		soundManager.PlaySoundEffect(SOUND_INFO);
-		//mainGame->stACMessage->setText(msgbuf);
-		//mainGame->PopupElement(mainGame->wACMessage, 100);
-		mainGame->env->addMessageBox(L"", msgbuf);
+		mainGame->stACMessage->setText(msgbuf);
+		mainGame->PopupElement(mainGame->wACMessage, 100);
+		//mainGame->env->addMessageBox(L"", msgbuf);
 		mainGame->cbDeckSelect->setEnabled(true);
 		mainGame->gMutex.unlock();
 		break;	
@@ -2628,6 +2628,8 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			}
 		}
 		if(mainGame->dInfo.isTag && mainGame->dInfo.turn != 1) {
+			mainGame->btnReloadBCATextures->setVisible(true);
+			mainGame->btnSwapCovers->setVisible(true);
 			if(player == 0)
 				mainGame->dInfo.tag_player[0] = !mainGame->dInfo.tag_player[0];
 			else
