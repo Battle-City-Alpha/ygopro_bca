@@ -521,9 +521,9 @@ void Game::DrawMisc() {
 
 	DrawBorders();
 	if(!dInfo.isReplay && dInfo.player_type < 7 && dInfo.time_limit) {
-		driver->draw2DRectangle(Resize(445, 34, 445 + dInfo.time_left[0] * 100 / dInfo.time_limit, 44), 0xa0e0e0e0, 0xa0e0e0e0, 0xa0c0c0c0, 0xa0c0c0c0);
+		driver->draw2DRectangle(Resize(445, 34, 445 + dInfo.time_left[0] * 100 / dInfo.time_limit, 44), 0xf0e0e0e0, 0xf0e0e0e0, 0xf0c0c0c0, 0xf0c0c0c0);
 		driver->draw2DRectangleOutline(Resize(445, 34, 545, 44), 0xffffffff);
-		driver->draw2DRectangle(Resize(874 - dInfo.time_left[1] * 100 / dInfo.time_limit, 34, 874, 44), 0xa0e0e0e0, 0xa0e0e0e0, 0xa0c0c0c0, 0xa0c0c0c0);
+		driver->draw2DRectangle(Resize(874 - dInfo.time_left[1] * 100 / dInfo.time_limit, 34, 874, 44), 0xf0e0e0e0, 0xf0e0e0e0, 0xf0c0c0c0, 0xf0c0c0c0);
 		driver->draw2DRectangleOutline(Resize(774, 34, 874, 44), 0xffffffff);
 	}
 	DrawShadowText(numFont, dInfo.strLP[0], Resize(330, 12, 631, 30), Resize(0, 1, 1, 0), mainGame->playerlpcolor, 0xff000000, true, false, 0);
@@ -1102,6 +1102,12 @@ void Game::DrawThumb(code_pointer cp, position2di pos, const std::unordered_map<
 	if (mainGame->cbMRSelect->getSelected() != 0 && !mainGame->boosters.MRContainsCard(5 - mainGame->cbMRSelect->getSelected(), (cp->second.alias == 0) ? (cp->first) : (cp->second.alias)))
 	{
 		driver->draw2DRectangle(irr::video::SColor::SColor(120, 255, 165, 0), Resize(pos.X, pos.Y, pos.X + CARD_THUMB_WIDTH, pos.Y + CARD_THUMB_HEIGHT));
+		driver->draw2DRectangleOutline(Resize(pos.X, pos.Y, pos.X + CARD_THUMB_WIDTH, pos.Y + CARD_THUMB_HEIGHT), 0xffff0000);
+		//driver->draw2DImage(imageManager.tNotOwn, mainGame->Resize(pos.X, pos.Y, pos.X + 20, pos.Y + 20), recti(0, 0, imageManager.tNotOwn->getOriginalSize().Width, imageManager.tNotOwn->getOriginalSize().Height), 0, 0, true);
+	}
+	if (!mainGame->boosters.BanlistDatasContainsCard(mainGame->cbDBLFList->getItem(mainGame->cbDBLFList->getSelected()), (cp->second.alias == 0) ? (cp->first) : (cp->second.alias)))
+	{
+		driver->draw2DRectangle(irr::video::SColor::SColor(120, 100, 0, 255), Resize(pos.X, pos.Y, pos.X + CARD_THUMB_WIDTH, pos.Y + CARD_THUMB_HEIGHT));
 		driver->draw2DRectangleOutline(Resize(pos.X, pos.Y, pos.X + CARD_THUMB_WIDTH, pos.Y + CARD_THUMB_HEIGHT), 0xffff0000);
 		//driver->draw2DImage(imageManager.tNotOwn, mainGame->Resize(pos.X, pos.Y, pos.X + 20, pos.Y + 20), recti(0, 0, imageManager.tNotOwn->getOriginalSize().Width, imageManager.tNotOwn->getOriginalSize().Height), 0, 0, true);
 	}

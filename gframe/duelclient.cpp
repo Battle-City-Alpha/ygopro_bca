@@ -1016,7 +1016,7 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 			}
 		}
 		if (mainGame->lstWatchers->getItemCount() > 0) {
-			int uppersize = mainGame->ebChatInput->getAbsolutePosition().UpperLeftCorner.Y - 25 - (mainGame->lstWatchers->getItemCount() * 30);
+			int uppersize = mainGame->ebChatInput->getAbsolutePosition().UpperLeftCorner.Y - 25 - (mainGame->lstWatchers->getItemCount() * 25);
 			if (uppersize < mainGame->wInfos->getAbsolutePosition().UpperLeftCorner.Y)
 				uppersize = mainGame->wInfos->getAbsolutePosition().UpperLeftCorner.Y;
 			mainGame->lstWatchers->setRelativePosition(recti(mainGame->wChat->getAbsolutePosition().UpperLeftCorner.X, uppersize, mainGame->cbChatSelect->getAbsolutePosition().LowerRightCorner.X, mainGame->ebChatInput->getAbsolutePosition().UpperLeftCorner.Y - 25));
@@ -1075,6 +1075,10 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 		}
 		case DECKERROR_MRERROR: {
 			myswprintf(msgbuf, dataManager.GetSysString(1498), dataManager.GetName(reason));
+			break;
+		}
+		case DECKERROR_BANLISTERROR: {
+			myswprintf(msgbuf, dataManager.GetSysString(1496), dataManager.GetName(reason));
 			break;
 		}
 		case DECKERROR_TURBODUEL: {

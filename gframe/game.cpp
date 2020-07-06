@@ -129,8 +129,10 @@ bool Game::Initialize() {
 	wCreateHost->setVisible(false);
 	env->addStaticText(dataManager.GetSysString(1226), rect<s32>(20, 30, 220, 50), false, false, wCreateHost);
 	cbLFlist = env->addComboBox(rect<s32>(140, 25, 300, 50), wCreateHost);
-	for(unsigned int i = 0; i < deckManager._lfList.size(); ++i)
+	for (unsigned int i = 0; i < deckManager._lfList.size(); ++i) {
 		cbLFlist->addItem(deckManager._lfList[i].listName.c_str(), deckManager._lfList[i].hash);
+		boosters.LoadBanlistDatas(deckManager._lfList[i].listName);
+	}
 	stRule = env->addStaticText(dataManager.GetSysString(1225), rect<s32>(20, 60, 220, 80), false, false, wCreateHost);
 	cbRule = env->addComboBox(rect<s32>(140, 55, 300, 80), wCreateHost);
 	cbRule->addItem(dataManager.GetSysString(1240));
@@ -800,6 +802,7 @@ bool Game::Initialize() {
 	lstWatchers = env->addListBox(rect<s32>(1,1,1,1), 0);
 	lstWatchers->setVisible(false);
 	lstWatchers->setDrawBackground(false);
+	lstWatchers->setItemHeight(25);
 	btnShowWatchers = env->addButton(rect<s32>(1,1,1,1), 0, BUTTON_SHOW_WATCHERS, dataManager.GetSysString(2990));
 	btnShowWatchers->setIsPushButton(true);
 	mainGame->btnShowWatchers->setVisible(false);
@@ -1192,7 +1195,7 @@ void Game::LoadConfig() {
 	gameConf.auto_search_limit = 0;
 	gameConf.search_multiple_keywords = 1;
 	gameConf.chkIgnoreDeckChanges = 0;
-	gameConf.defaultOT = 1;
+	gameConf.defaultOT = 2;
 	gameConf.enable_bot_mode = 0;
 	gameConf.quick_animation = 0;
 	gameConf.auto_save_replay = 0;
@@ -1281,7 +1284,7 @@ void Game::LoadConfig() {
 		} else if(!strcmp(strbuf, "ignore_deck_changes")) {
 			gameConf.chkIgnoreDeckChanges = atoi(valbuf);
 		} else if(!strcmp(strbuf, "default_ot")) {
-			gameConf.defaultOT = atoi(valbuf);
+			gameConf.defaultOT = 2;
 		} else if(!strcmp(strbuf, "enable_bot_mode")) {
 			gameConf.enable_bot_mode = atoi(valbuf);
 		} else if(!strcmp(strbuf, "quick_animation")) {

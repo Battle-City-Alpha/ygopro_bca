@@ -400,6 +400,7 @@ bool DeckBuilder::OnEvent(const irr::SEvent& event) {
 			switch(id) {
 			case COMBOBOX_DBLFLIST: {
 				filterList = &deckManager._lfList[mainGame->cbDBLFList->getSelected()].content;
+				InstantSearch();
 				break;
 			}
 			case COMBOBOX_DBDECKS: {
@@ -912,6 +913,8 @@ void DeckBuilder::FilterCards() {
 			continue;
 		if (mainGame->cbMRSelect->getSelected() != 0 && !mainGame->boosters.MRContainsCard(5 - mainGame->cbMRSelect->getSelected(), code))
 			continue;
+		if (!mainGame->boosters.BanlistDatasContainsCard(mainGame->cbDBLFList->getItem(mainGame->cbDBLFList->getSelected()), code))
+			continue;
 
 		if (isBoosterSearch && !mainGame->boosters.CheckCard(pstr, code, true))
 			continue;
@@ -994,19 +997,18 @@ void DeckBuilder::FilterCards() {
 		for (auto elements_iterator = query_elements.begin(); elements_iterator != query_elements.end(); ++elements_iterator) {
 			bool match = false;
 			if (elements_iterator->type == element_t::type_t::name) {
-				std::transform(elements_iterator->keyword.begin(), elements_iterator->keyword.end(), elements_iterator->keyword.begin(), ::toupper);
 				match = CardNameContains(text.name.c_str(), elements_iterator->keyword.c_str());
 			} else if (elements_iterator->type == element_t::type_t::setcode) {
 				match = elements_iterator->setcode && check_set_code(data, elements_iterator->setcode);
 			} else {
 				int trycode = BufferIO::GetVal(elements_iterator->keyword.c_str());
 				bool tryresult = dataManager.GetData(trycode, 0);
-				if(!tryresult) {
-					std::transform(elements_iterator->keyword.begin(), elements_iterator->keyword.end(), elements_iterator->keyword.begin(), ::toupper);
+				if (!tryresult) {
 					match = CardNameContains(text.name.c_str(), elements_iterator->keyword.c_str())
 						|| text.text.find(elements_iterator->keyword) != std::wstring::npos
 						|| (elements_iterator->setcode && check_set_code(data, elements_iterator->setcode));
-				} else {
+				}
+				else {
 					match = data.code == trycode || data.alias == trycode;
 				}
 			}
