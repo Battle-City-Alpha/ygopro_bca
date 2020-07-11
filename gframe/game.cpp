@@ -802,7 +802,7 @@ bool Game::Initialize() {
 	lstWatchers = env->addListBox(rect<s32>(1,1,1,1), 0);
 	lstWatchers->setVisible(false);
 	lstWatchers->setDrawBackground(false);
-	lstWatchers->setItemHeight(25);
+	lstWatchers->setItemHeight(28);
 	btnShowWatchers = env->addButton(rect<s32>(1,1,1,1), 0, BUTTON_SHOW_WATCHERS, dataManager.GetSysString(2990));
 	btnShowWatchers->setIsPushButton(true);
 	mainGame->btnShowWatchers->setVisible(false);

@@ -1016,7 +1016,7 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 			}
 		}
 		if (mainGame->lstWatchers->getItemCount() > 0) {
-			int uppersize = mainGame->ebChatInput->getAbsolutePosition().UpperLeftCorner.Y - 25 - (mainGame->lstWatchers->getItemCount() * 25);
+			int uppersize = mainGame->ebChatInput->getAbsolutePosition().UpperLeftCorner.Y - 25 - (mainGame->lstWatchers->getItemCount() * 28);
 			if (uppersize < mainGame->wInfos->getAbsolutePosition().UpperLeftCorner.Y)
 				uppersize = mainGame->wInfos->getAbsolutePosition().UpperLeftCorner.Y;
 			mainGame->lstWatchers->setRelativePosition(recti(mainGame->wChat->getAbsolutePosition().UpperLeftCorner.X, uppersize, mainGame->cbChatSelect->getAbsolutePosition().LowerRightCorner.X, mainGame->ebChatInput->getAbsolutePosition().UpperLeftCorner.Y - 25));
@@ -1097,6 +1097,19 @@ void DuelClient::HandleSTOCPacketLan(char* data, unsigned int len) {
 		mainGame->cbDeckSelect->setEnabled(true);
 		mainGame->gMutex.unlock();
 		break;	
+	}
+	case STOC_UPDATE_DECK: {
+		deckManager.current_deck.clear();
+		int mainc = BufferIO::ReadInt32(pdata);
+		for (int i = 0; i < mainc; i++)
+			deckManager.current_deck.main.push_back(dataManager.GetCodePointer(BufferIO::ReadInt32(pdata)));
+		int extrac = BufferIO::ReadInt32(pdata);
+		for (int i = 0; i < extrac; i++)
+			deckManager.current_deck.extra.push_back(dataManager.GetCodePointer(BufferIO::ReadInt32(pdata)));
+		int sidec = BufferIO::ReadInt32(pdata);
+		for (int i = 0; i < sidec; i++)
+			deckManager.current_deck.side.push_back(dataManager.GetCodePointer(BufferIO::ReadInt32(pdata)));			
+		break;
 	}
 	}
 }
@@ -1246,7 +1259,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			break;
 		}
 		case HINT_OPSELECTED: {
-			myswprintf(textBuffer, dataManager.GetSysString(1510), dataManager.GetDesc(data));
+			myswprintf(textBuffer, dataManager.GetSysString(player == mainGame->LocalPlayer(0) ? 1510 : 1511), dataManager.GetDesc(data));
 			mainGame->AddLog(textBuffer);
 			mainGame->gMutex.lock();
 			mainGame->SetStaticText(mainGame->stACMessage, 310, mainGame->guiFont, textBuffer);
