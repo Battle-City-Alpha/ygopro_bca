@@ -1456,6 +1456,7 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			mainGame->dInfo.isReplaySwapped = false;
 			mainGame->dField.ReplaySwap();
 		}
+		mainGame->HideElement(mainGame->wFTSelect);
 		mainGame->gMutex.unlock();
 		return true;
 	}

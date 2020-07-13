@@ -406,7 +406,7 @@ bool Game::Initialize() {
 	}
 
 	//TPResult
-	wFTSelect = env->addWindow(rect<s32>(550, 240, 780, 340), false, L"");
+	wFTSelect = env->addWindow(rect<s32>(550, 240, 780, 340), false, L"Choisissez");
 	wFTSelect->getCloseButton()->setVisible(false);
 	wFTSelect->setVisible(false);
 	btnFirst = env->addButton(rect<s32>(10, 30, 220, 55), wFTSelect, BUTTON_FIRST, dataManager.GetSysString(100));
