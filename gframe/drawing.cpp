@@ -127,6 +127,7 @@ void Game::DrawBackGround() {
 	driver->drawVertexPrimitiveList(matManager.vField, 4, matManager.iRectangle, 2);
 
 	DrawPartners();
+	DrawEmblems();
 
 	driver->setMaterial(matManager.mBackLine);
 	//select field
@@ -1407,7 +1408,7 @@ bool Game::CheckBCATexturesLoaded()
 {
 	int n = dInfo.isTag ? 4 : 2;
 	for (int i = 0; i < n; i++)
-		if (!imageManager.tCover[i] || !imageManager.tAvatar[i] || !imageManager.tBorder[i] || !imageManager.tPartner[i])
+		if (!imageManager.tCover[i] || !imageManager.tAvatar[i] || !imageManager.tBorder[i] || !imageManager.tPartner[i] || !imageManager.tEmblem[i])
 			return false;	
 	return true;
 }
@@ -1452,5 +1453,45 @@ void Game::DrawPartners()
 		DrawPlayerPartner(driver, trueIds[2], true);
 	else
 		DrawPlayerPartner(driver, trueIds[3], true);
+}
+static void DrawPlayerEmblem(IVideoDriver* driver, int player, bool opponent)
+{
+	ITexture* emblem = imageManager.tEmblem[player];
+
+	if (emblem)
+	{
+		matManager.mTexture.setTexture(0, emblem);
+		driver->setMaterial(matManager.mTexture);
+		if (opponent)
+			driver->drawVertexPrimitiveList(matManager.vFieldEmblem2, 4, matManager.iRectangle, 2);
+		else
+			driver->drawVertexPrimitiveList(matManager.vFieldEmblem1, 4, matManager.iRectangle, 2);
+	}
+}
+void Game::DrawEmblems()
+{
+	int trueIds[4];
+	bool isHostTeam = DuelClient::IsHostTeam();
+	if (dInfo.isTag)
+	{
+		trueIds[0] = isHostTeam ? 0 : 2;
+		trueIds[1] = isHostTeam ? 1 : 3;
+		trueIds[2] = isHostTeam ? 2 : 0;
+		trueIds[3] = isHostTeam ? 3 : 1;
+	}
+	else
+	{
+		trueIds[0] = isHostTeam ? 0 : 1;
+		trueIds[2] = isHostTeam ? 1 : 0;
+	}
+
+	if (!dInfo.isTag || !dInfo.tag_player[0])
+		DrawPlayerEmblem(driver, trueIds[0], false);
+	else
+		DrawPlayerEmblem(driver, trueIds[1], false);
+	if (!dInfo.isTag || !dInfo.tag_player[1])
+		DrawPlayerEmblem(driver, trueIds[2], true);
+	else
+		DrawPlayerEmblem(driver, trueIds[3], true);
 }
 }

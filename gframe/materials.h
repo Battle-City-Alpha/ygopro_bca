@@ -21,8 +21,8 @@ public:
 	S3DVertex vFieldSpell2[4];
 	S3DVertex vFieldPartner1[4];
 	S3DVertex vFieldPartner2[4];
-	S3DVertex vFieldPartnerMini1[4];
-	S3DVertex vFieldPartnerMini2[4];
+	S3DVertex vFieldEmblem1[4];
+	S3DVertex vFieldEmblem2[4];
 	//S3DVertex vBackLine[76];
 	S3DVertex vFieldDeck[2][4];
 	S3DVertex vFieldGrave[2][2][4];
