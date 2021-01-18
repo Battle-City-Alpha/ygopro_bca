@@ -52,6 +52,7 @@ public:
 	irr::video::ITexture* tAvatar[4];
 	irr::video::ITexture* tBorder[4];
 	irr::video::ITexture* tPartner[4];
+	irr::video::ITexture* tEmblem[4];
 };
 
 extern ImageManager imageManager;

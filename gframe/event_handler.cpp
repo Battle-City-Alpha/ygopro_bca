@@ -1363,7 +1363,8 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 							selectable_field = 0;
 							selected_field = 0;
 							DuelClient::SetResponseB(respbuf, p);
-							DuelClient::SendResponse();
+							DuelClient::SendResponse(); 
+							ShowCancelOrFinishButton(0);
 						}
 					}
 				}
@@ -2394,14 +2395,18 @@ void ClientField::SetShowMark(ClientCard* pcard, bool enable) {
 }
 void ClientField::ShowCardInfoInList(ClientCard* pcard, irr::gui::IGUIElement* element, irr::gui::IGUIElement* parent) {
 	std::wstring str(L"");
+	wchar_t formatBuffer[2048];
 	if(pcard->code) {
 		str.append(dataManager.GetName(pcard->code));
+	}
+	if (pcard->overlayTarget) {
+		myswprintf(formatBuffer, dataManager.GetSysString(225), dataManager.GetName(pcard->overlayTarget->code), pcard->overlayTarget->sequence + 1);
+		str.append(L"\n").append(formatBuffer);
 	}
 	if((pcard->status & STATUS_PROC_COMPLETE)
 		&& (pcard->type & (TYPE_RITUAL | TYPE_FUSION | TYPE_SYNCHRO | TYPE_XYZ | TYPE_LINK | TYPE_SPSUMMON)))
 		str.append(L"\n").append(dataManager.GetSysString(224));
 	for(size_t i = 0; i < chains.size(); ++i) {
-		wchar_t formatBuffer[2048];
 		auto chit = chains[i];
 		if(pcard == chit.chain_card) {
 			myswprintf(formatBuffer, dataManager.GetSysString(216), i + 1);
@@ -2584,6 +2589,19 @@ void ClientField::CancelOrFinish() {
 		if(mainGame->wCardSelect->isVisible()) {
 			DuelClient::SetResponseI(-1);
 			mainGame->HideElement(mainGame->wCardSelect, true);
+		}
+		break;
+	}
+	case MSG_SELECT_PLACE: {
+		if (select_cancelable) {
+			unsigned char respbuf[3];
+			respbuf[0] = mainGame->LocalPlayer(0);
+			respbuf[1] = 0;
+			respbuf[2] = 0;
+			mainGame->dField.selectable_field = 0;
+			DuelClient::SetResponseB(respbuf, 3);
+			DuelClient::SendResponse();
+			ShowCancelOrFinishButton(0);
 		}
 		break;
 	}

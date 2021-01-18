@@ -43,6 +43,7 @@ bool ImageManager::Initial() {
 		tBorder[i] = NULL;
 		tCover[i] = NULL;
 		tPartner[i] = NULL;
+		tEmblem[i] = NULL;
 	}
 	return true;
 }
@@ -277,6 +278,11 @@ void ImageManager::LoadBCACustomTextures(bool force)
 			std::string partnerpath = "textures/partners/p_" + std::to_string(i) + ".png";
 			tPartner[i] = GetTextureFromFile(partnerpath.c_str(), 256, 256);
 		}
+		if (!tEmblem[i] || force)
+		{
+			std::string emblempath = "textures/emblems/e_" + std::to_string(i) + ".png";
+			tEmblem[i] = GetTextureFromFile(emblempath.c_str(), 256, 256);
+		}
 	}
 }
 void ImageManager::DeleteBCACustomTextures()
@@ -286,10 +292,12 @@ void ImageManager::DeleteBCACustomTextures()
 		std::string avatarpath = "textures/avatars/a_" + std::to_string(i) + ".png";
 		std::string borderpath = "textures/borders/b_" + std::to_string(i) + ".png";
 		std::string coverpath = "textures/sleeves/s_" + std::to_string(i) + ".png";
+		std::string emblempath = "textures/emblems/e_" + std::to_string(i) + ".png";
 		
 		std::remove(avatarpath.c_str());
 		std::remove(borderpath.c_str());
 		std::remove(coverpath.c_str());
+		std::remove(emblempath.c_str());
 	}
 }
 }

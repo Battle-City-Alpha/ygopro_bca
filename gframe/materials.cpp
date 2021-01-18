@@ -10,7 +10,6 @@ inline void SetS3DVertex(S3DVertex* v, f32 x1, f32 y1, f32 x2, f32 y2, f32 z, f3
 	v[2] = S3DVertex(x1, y2, z, 0, 0, nz, SColor(255, 255, 255, 255), tu1, tv2);
 	v[3] = S3DVertex(x2, y2, z, 0, 0, nz, SColor(255, 255, 255, 255), tu2, tv2);
 }
-
 Materials::Materials() {
 	SetS3DVertex(vCardFront, -0.35f, -0.5f, 0.35f, 0.5f, 0, 1, 0, 0, 1, 1);
 	SetS3DVertex(vCardOutline, -0.375f, -0.54f, 0.37f, 0.54f, 0, 1, 0, 0, 1, 1);
@@ -237,8 +236,11 @@ Materials::Materials() {
 	//RScale
 	SetS3DVertex(vFieldSzone[1][7][0], 1.0f, -1.4f, 0.2f, -2.6f, 0, 1, 0, 0, 0, 0);
 	SetS3DVertex(vFieldSzone[1][7][1], 0.0f, -0.1f, -0.8f, -1.3f, 0, 1, 0, 0, 0, 0);
+	//emblem
+	SetS3DVertex(vFieldEmblem1, 0.2f, 0.4f, 1.0f, 1.3f, 0, 1, 0, 0, 1, 1);
+	SetS3DVertex(vFieldEmblem2, 7.7f, -0.4f, 6.9f, -1.3f, 0, 1, 0, 0, 1, 1);
 
-	//conti_act
+	//conti_actmon
 	vFieldContiAct[0] = vector3df(3.5f, -0.6f, 0.0f);
 	vFieldContiAct[1] = vector3df(4.4f, -0.6f, 0.0f);
 	vFieldContiAct[2] = vector3df(3.5f, 0.6f, 0.0f);
