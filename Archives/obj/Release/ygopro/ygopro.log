@@ -1,0 +1,135 @@
+﻿     Création de la bibliothèque ..\bin\release\BCA.lib et de l'objet ..\bin\release\BCA.exp
+ocgcore.lib(processor.obj) : error LNK2019: symbole externe non résolu _luaL_unref référencé dans la fonction "public: int __thiscall field::add_chain(unsigned short)" (?add_chain@field@@QAEHG@Z)
+ocgcore.lib(operations.obj) : error LNK2001: symbole externe non résolu _luaL_unref
+ocgcore.lib(interpreter.obj) : error LNK2001: symbole externe non résolu _luaL_unref
+ocgcore.lib(libeffect.obj) : error LNK2001: symbole externe non résolu _luaL_unref
+ocgcore.lib(scriptlib.obj) : error LNK2001: symbole externe non résolu _lua_settop
+ocgcore.lib(operations.obj) : error LNK2001: symbole externe non résolu _lua_settop
+ocgcore.lib(interpreter.obj) : error LNK2001: symbole externe non résolu _lua_settop
+ocgcore.lib(libeffect.obj) : error LNK2001: symbole externe non résolu _lua_settop
+ocgcore.lib(libduel.obj) : error LNK2001: symbole externe non résolu _lua_settop
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _lua_close référencé dans la fonction "public: __thiscall interpreter::~interpreter(void)" (??1interpreter@@QAE@XZ)
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _lua_newthread référencé dans la fonction "public: int __thiscall interpreter::call_coroutine(int,unsigned int,unsigned int *,unsigned short)" (?call_coroutine@interpreter@@QAEHHIPAIG@Z)
+ocgcore.lib(libduel.obj) : error LNK2001: symbole externe non résolu _lua_gettop
+ocgcore.lib(libdebug.obj) : error LNK2001: symbole externe non résolu _lua_gettop
+ocgcore.lib(scriptlib.obj) : error LNK2001: symbole externe non résolu _lua_gettop
+ocgcore.lib(interpreter.obj) : error LNK2001: symbole externe non résolu _lua_gettop
+ocgcore.lib(libcard.obj) : error LNK2001: symbole externe non résolu _lua_gettop
+ocgcore.lib(libeffect.obj) : error LNK2001: symbole externe non résolu _lua_gettop
+ocgcore.lib(libgroup.obj) : error LNK2001: symbole externe non résolu _lua_gettop
+ocgcore.lib(libduel.obj) : error LNK2001: symbole externe non résolu _lua_pushvalue
+ocgcore.lib(libdebug.obj) : error LNK2001: symbole externe non résolu _lua_pushvalue
+ocgcore.lib(interpreter.obj) : error LNK2001: symbole externe non résolu _lua_pushvalue
+ocgcore.lib(libcard.obj) : error LNK2001: symbole externe non résolu _lua_pushvalue
+ocgcore.lib(libeffect.obj) : error LNK2001: symbole externe non résolu _lua_pushvalue
+ocgcore.lib(libgroup.obj) : error LNK2001: symbole externe non résolu _lua_pushvalue
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _lua_rotate référencé dans la fonction "public: int __thiscall interpreter::call_card_function(class card *,char const *,unsigned int,int)" (?call_card_function@interpreter@@QAEHPAVcard@@PBDIH@Z)
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _lua_isinteger référencé dans la fonction "public: int __thiscall interpreter::get_function_value(int,unsigned int)" (?get_function_value@interpreter@@QAEHHI@Z)
+ocgcore.lib(libeffect.obj) : error LNK2001: symbole externe non résolu _lua_isinteger
+ocgcore.lib(libduel.obj) : error LNK2001: symbole externe non résolu _lua_type
+ocgcore.lib(scriptlib.obj) : error LNK2001: symbole externe non résolu _lua_type
+ocgcore.lib(interpreter.obj) : error LNK2001: symbole externe non résolu _lua_type
+ocgcore.lib(libcard.obj) : error LNK2001: symbole externe non résolu _lua_type
+ocgcore.lib(libeffect.obj) : error LNK2001: symbole externe non résolu _lua_type
+ocgcore.lib(libgroup.obj) : error LNK2001: symbole externe non résolu _lua_type
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _lua_tonumberx référencé dans la fonction "public: int __thiscall interpreter::get_function_value(int,unsigned int)" (?get_function_value@interpreter@@QAEHHI@Z)
+ocgcore.lib(libeffect.obj) : error LNK2001: symbole externe non résolu _lua_tonumberx
+ocgcore.lib(libduel.obj) : error LNK2001: symbole externe non résolu _lua_tonumberx
+ocgcore.lib(libduel.obj) : error LNK2001: symbole externe non résolu _lua_tointegerx
+ocgcore.lib(libdebug.obj) : error LNK2001: symbole externe non résolu _lua_tointegerx
+ocgcore.lib(interpreter.obj) : error LNK2001: symbole externe non résolu _lua_tointegerx
+ocgcore.lib(libcard.obj) : error LNK2001: symbole externe non résolu _lua_tointegerx
+ocgcore.lib(libeffect.obj) : error LNK2001: symbole externe non résolu _lua_tointegerx
+ocgcore.lib(libgroup.obj) : error LNK2001: symbole externe non résolu _lua_tointegerx
+ocgcore.lib(libduel.obj) : error LNK2001: symbole externe non résolu _lua_toboolean
+ocgcore.lib(libdebug.obj) : error LNK2001: symbole externe non résolu _lua_toboolean
+ocgcore.lib(interpreter.obj) : error LNK2001: symbole externe non résolu _lua_toboolean
+ocgcore.lib(libcard.obj) : error LNK2001: symbole externe non résolu _lua_toboolean
+ocgcore.lib(libeffect.obj) : error LNK2001: symbole externe non résolu _lua_toboolean
+ocgcore.lib(libgroup.obj) : error LNK2001: symbole externe non résolu _lua_toboolean
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _lua_tolstring référencé dans la fonction "public: int __thiscall interpreter::call_card_function(class card *,char const *,unsigned int,int)" (?call_card_function@interpreter@@QAEHPAVcard@@PBDIH@Z)
+ocgcore.lib(libdebug.obj) : error LNK2001: symbole externe non résolu _lua_tolstring
+ocgcore.lib(libduel.obj) : error LNK2001: symbole externe non résolu _lua_touserdata
+ocgcore.lib(libdebug.obj) : error LNK2001: symbole externe non résolu _lua_touserdata
+ocgcore.lib(interpreter.obj) : error LNK2001: symbole externe non résolu _lua_touserdata
+ocgcore.lib(libcard.obj) : error LNK2001: symbole externe non résolu _lua_touserdata
+ocgcore.lib(libeffect.obj) : error LNK2001: symbole externe non résolu _lua_touserdata
+ocgcore.lib(libgroup.obj) : error LNK2001: symbole externe non résolu _lua_touserdata
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _lua_topointer référencé dans la fonction "public: static class duel * __cdecl interpreter::get_duel_info(struct lua_State *)" (?get_duel_info@interpreter@@SAPAVduel@@PAUlua_State@@@Z)
+ocgcore.lib(libduel.obj) : error LNK2001: symbole externe non résolu _lua_pushnil
+ocgcore.lib(interpreter.obj) : error LNK2001: symbole externe non résolu _lua_pushnil
+ocgcore.lib(libcard.obj) : error LNK2001: symbole externe non résolu _lua_pushnil
+ocgcore.lib(libeffect.obj) : error LNK2001: symbole externe non résolu _lua_pushnil
+ocgcore.lib(libgroup.obj) : error LNK2001: symbole externe non résolu _lua_pushnil
+ocgcore.lib(libduel.obj) : error LNK2001: symbole externe non résolu _lua_pushinteger
+ocgcore.lib(interpreter.obj) : error LNK2001: symbole externe non résolu _lua_pushinteger
+ocgcore.lib(libcard.obj) : error LNK2001: symbole externe non résolu _lua_pushinteger
+ocgcore.lib(libeffect.obj) : error LNK2001: symbole externe non résolu _lua_pushinteger
+ocgcore.lib(libgroup.obj) : error LNK2001: symbole externe non résolu _lua_pushinteger
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _lua_pushstring référencé dans la fonction "public: int __thiscall interpreter::load_card_script(unsigned int)" (?load_card_script@interpreter@@QAEHI@Z)
+ocgcore.lib(libcard.obj) : error LNK2001: symbole externe non résolu _lua_pushstring
+ocgcore.lib(libeffect.obj) : error LNK2001: symbole externe non résolu _lua_pushstring
+ocgcore.lib(libgroup.obj) : error LNK2001: symbole externe non résolu _lua_pushstring
+ocgcore.lib(libduel.obj) : error LNK2001: symbole externe non résolu _lua_pushboolean
+ocgcore.lib(libdebug.obj) : error LNK2001: symbole externe non résolu _lua_pushboolean
+ocgcore.lib(interpreter.obj) : error LNK2001: symbole externe non résolu _lua_pushboolean
+ocgcore.lib(libcard.obj) : error LNK2001: symbole externe non résolu _lua_pushboolean
+ocgcore.lib(libeffect.obj) : error LNK2001: symbole externe non résolu _lua_pushboolean
+ocgcore.lib(libgroup.obj) : error LNK2001: symbole externe non résolu _lua_pushboolean
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _lua_pushlightuserdata référencé dans la fonction "public: __thiscall interpreter::interpreter(class duel *)" (??0interpreter@@QAE@PAVduel@@@Z)
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _lua_getglobal référencé dans la fonction "public: int __thiscall interpreter::load_card_script(unsigned int)" (?load_card_script@interpreter@@QAEHI@Z)
+ocgcore.lib(libdebug.obj) : error LNK2001: symbole externe non résolu _lua_getglobal
+ocgcore.lib(scriptlib.obj) : error LNK2001: symbole externe non résolu _lua_getglobal
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _lua_getfield référencé dans la fonction "public: int __thiscall interpreter::call_card_function(class card *,char const *,unsigned int,int)" (?call_card_function@interpreter@@QAEHPAVcard@@PBDIH@Z)
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _lua_rawgeti référencé dans la fonction "public: int __thiscall interpreter::call_card_function(class card *,char const *,unsigned int,int)" (?call_card_function@interpreter@@QAEHPAVcard@@PBDIH@Z)
+ocgcore.lib(libeffect.obj) : error LNK2001: symbole externe non résolu _lua_rawgeti
+ocgcore.lib(libduel.obj) : error LNK2001: symbole externe non résolu _lua_createtable
+ocgcore.lib(libdebug.obj) : error LNK2001: symbole externe non résolu _lua_createtable
+ocgcore.lib(interpreter.obj) : error LNK2001: symbole externe non résolu _lua_createtable
+ocgcore.lib(libcard.obj) : error LNK2001: symbole externe non résolu _lua_createtable
+ocgcore.lib(libeffect.obj) : error LNK2001: symbole externe non résolu _lua_createtable
+ocgcore.lib(libgroup.obj) : error LNK2001: symbole externe non résolu _lua_createtable
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _lua_newuserdata référencé dans la fonction "public: int __thiscall interpreter::register_card(class card *)" (?register_card@interpreter@@QAEHPAVcard@@@Z)
+ocgcore.lib(libduel.obj) : error LNK2001: symbole externe non résolu _lua_setglobal
+ocgcore.lib(libdebug.obj) : error LNK2001: symbole externe non résolu _lua_setglobal
+ocgcore.lib(interpreter.obj) : error LNK2001: symbole externe non résolu _lua_setglobal
+ocgcore.lib(libcard.obj) : error LNK2001: symbole externe non résolu _lua_setglobal
+ocgcore.lib(libeffect.obj) : error LNK2001: symbole externe non résolu _lua_setglobal
+ocgcore.lib(libgroup.obj) : error LNK2001: symbole externe non résolu _lua_setglobal
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _lua_setfield référencé dans la fonction "public: __thiscall interpreter::interpreter(class duel *)" (??0interpreter@@QAE@PAVduel@@@Z)
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _lua_rawset référencé dans la fonction "public: int __thiscall interpreter::load_card_script(unsigned int)" (?load_card_script@interpreter@@QAEHI@Z)
+ocgcore.lib(libcard.obj) : error LNK2001: symbole externe non résolu _lua_rawset
+ocgcore.lib(libeffect.obj) : error LNK2001: symbole externe non résolu _lua_rawset
+ocgcore.lib(libgroup.obj) : error LNK2001: symbole externe non résolu _lua_rawset
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _lua_setmetatable référencé dans la fonction "public: int __thiscall interpreter::load_card_script(unsigned int)" (?load_card_script@interpreter@@QAEHI@Z)
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _lua_pcallk référencé dans la fonction "public: int __thiscall interpreter::call_card_function(class card *,char const *,unsigned int,int)" (?call_card_function@interpreter@@QAEHPAVcard@@PBDIH@Z)
+ocgcore.lib(libdebug.obj) : error LNK2001: symbole externe non résolu _lua_pcallk
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _lua_resume référencé dans la fonction "public: int __thiscall interpreter::call_coroutine(int,unsigned int,unsigned int *,unsigned short)" (?call_coroutine@interpreter@@QAEHHIPAIG@Z)
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _luaL_ref référencé dans la fonction "public: __thiscall interpreter::interpreter(class duel *)" (??0interpreter@@QAE@PAVduel@@@Z)
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _luaL_loadbufferx référencé dans la fonction "public: int __thiscall interpreter::load_script(char const *)" (?load_script@interpreter@@QAEHPBD@Z)
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _luaL_newstate référencé dans la fonction "public: __thiscall interpreter::interpreter(class duel *)" (??0interpreter@@QAE@PAVduel@@@Z)
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _luaL_getsubtable référencé dans la fonction "public: __thiscall interpreter::interpreter(class duel *)" (??0interpreter@@QAE@PAVduel@@@Z)
+ocgcore.lib(interpreter.obj) : error LNK2019: symbole externe non résolu _luaL_openlibs référencé dans la fonction "public: __thiscall interpreter::interpreter(class duel *)" (??0interpreter@@QAE@PAVduel@@@Z)
+ocgcore.lib(libcard.obj) : error LNK2019: symbole externe non résolu _lua_yieldk référencé dans la fonction "public: static int __cdecl scriptlib::card_remove_overlay_card(struct lua_State *)" (?card_remove_overlay_card@scriptlib@@SAHPAUlua_State@@@Z)
+ocgcore.lib(libgroup.obj) : error LNK2001: symbole externe non résolu _lua_yieldk
+ocgcore.lib(libduel.obj) : error LNK2001: symbole externe non résolu _lua_yieldk
+ocgcore.lib(libdebug.obj) : error LNK2001: symbole externe non résolu _luaL_checkversion_
+ocgcore.lib(libcard.obj) : error LNK2001: symbole externe non résolu _luaL_checkversion_
+ocgcore.lib(libeffect.obj) : error LNK2001: symbole externe non résolu _luaL_checkversion_
+ocgcore.lib(libgroup.obj) : error LNK2001: symbole externe non résolu _luaL_checkversion_
+ocgcore.lib(libduel.obj) : error LNK2001: symbole externe non résolu _luaL_checkversion_
+ocgcore.lib(libdebug.obj) : error LNK2001: symbole externe non résolu _luaL_setfuncs
+ocgcore.lib(libcard.obj) : error LNK2001: symbole externe non résolu _luaL_setfuncs
+ocgcore.lib(libeffect.obj) : error LNK2001: symbole externe non résolu _luaL_setfuncs
+ocgcore.lib(libgroup.obj) : error LNK2001: symbole externe non résolu _luaL_setfuncs
+ocgcore.lib(libduel.obj) : error LNK2001: symbole externe non résolu _luaL_setfuncs
+ocgcore.lib(libeffect.obj) : error LNK2019: symbole externe non résolu _lua_isuserdata référencé dans la fonction "public: static int __cdecl scriptlib::effect_get_label_object(struct lua_State *)" (?effect_get_label_object@scriptlib@@SAHPAUlua_State@@@Z)
+ocgcore.lib(scriptlib.obj) : error LNK2001: symbole externe non résolu _lua_isuserdata
+ocgcore.lib(libeffect.obj) : error LNK2019: symbole externe non résolu _luaL_error référencé dans la fonction "public: static int __cdecl scriptlib::effect_set_label_object(struct lua_State *)" (?effect_set_label_object@scriptlib@@SAHPAUlua_State@@@Z)
+ocgcore.lib(libgroup.obj) : error LNK2001: symbole externe non résolu _luaL_error
+ocgcore.lib(libduel.obj) : error LNK2001: symbole externe non résolu _luaL_error
+ocgcore.lib(scriptlib.obj) : error LNK2001: symbole externe non résolu _luaL_error
+ocgcore.lib(scriptlib.obj) : error LNK2019: symbole externe non résolu _lua_isstring référencé dans la fonction "public: static int __cdecl scriptlib::check_param(struct lua_State *,int,int,int)" (?check_param@scriptlib@@SAHPAUlua_State@@HHH@Z)
+ocgcore.lib(scriptlib.obj) : error LNK2019: symbole externe non résolu _lua_rawequal référencé dans la fonction "int __cdecl check_data_type(struct lua_State *,int,char const *)" (?check_data_type@@YAHPAUlua_State@@HPBD@Z)
+ocgcore.lib(scriptlib.obj) : error LNK2019: symbole externe non résolu _lua_getmetatable référencé dans la fonction "int __cdecl check_data_type(struct lua_State *,int,char const *)" (?check_data_type@@YAHPAUlua_State@@HPBD@Z)
+..\bin\release\BCA.exe : fatal error LNK1120: 44 externes non résolus

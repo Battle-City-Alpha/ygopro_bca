@@ -1948,21 +1948,29 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 	}
 	case MSG_SELECT_PLACE:
 	case MSG_SELECT_DISFIELD: {
-		/*int selecting_player = */BufferIO::ReadInt8(pbuf);
-		mainGame->dField.select_min = BufferIO::ReadInt8(pbuf);
+		int selecting_player = BufferIO::ReadInt8(pbuf);
+		int count = BufferIO::ReadInt8(pbuf);
+		mainGame->dField.select_min = count > 0 ? count : 1;
+		mainGame->dField.select_ready = false;
+		mainGame->dField.select_cancelable = count == 0;
 		mainGame->dField.selectable_field = ~BufferIO::ReadInt32(pbuf);
+		if (selecting_player == mainGame->LocalPlayer(1))
+			mainGame->dField.selectable_field = (mainGame->dField.selectable_field >> 16) | (mainGame->dField.selectable_field << 16);
 		mainGame->dField.selected_field = 0;
 		unsigned char respbuf[64];
 		int pzone = 0;
 		if (mainGame->dInfo.curMsg == MSG_SELECT_PLACE) {
 			if (select_hint) {
 				myswprintf(textBuffer, dataManager.GetSysString(569), dataManager.GetName(select_hint));
-			} else
+			}
+			else
 				myswprintf(textBuffer, dataManager.GetSysString(560));
-		} else {
+		}
+		else {
 			if (select_hint) {
 				myswprintf(textBuffer, dataManager.GetDesc(select_hint));
-			} else
+			}
+			else
 				myswprintf(textBuffer, dataManager.GetSysString(570));
 		}
 		select_hint = 0;
@@ -1976,35 +1984,41 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 				respbuf[0] = mainGame->LocalPlayer(0);
 				respbuf[1] = LOCATION_MZONE;
 				filter = mainGame->dField.selectable_field & 0x7f;
-			} else if (mainGame->dField.selectable_field & 0x1f00) {
+			}
+			else if (mainGame->dField.selectable_field & 0x1f00) {
 				respbuf[0] = mainGame->LocalPlayer(0);
 				respbuf[1] = LOCATION_SZONE;
 				filter = (mainGame->dField.selectable_field >> 8) & 0x1f;
-			} else if (mainGame->dField.selectable_field & 0xc000) {
+			}
+			else if (mainGame->dField.selectable_field & 0xc000) {
 				respbuf[0] = mainGame->LocalPlayer(0);
 				respbuf[1] = LOCATION_SZONE;
 				filter = (mainGame->dField.selectable_field >> 14) & 0x3;
 				pzone = 1;
-			} else if (mainGame->dField.selectable_field & 0x7f0000) {
+			}
+			else if (mainGame->dField.selectable_field & 0x7f0000) {
 				respbuf[0] = mainGame->LocalPlayer(1);
 				respbuf[1] = LOCATION_MZONE;
 				filter = (mainGame->dField.selectable_field >> 16) & 0x7f;
-			} else if (mainGame->dField.selectable_field & 0x1f000000) {
+			}
+			else if (mainGame->dField.selectable_field & 0x1f000000) {
 				respbuf[0] = mainGame->LocalPlayer(1);
 				respbuf[1] = LOCATION_SZONE;
 				filter = (mainGame->dField.selectable_field >> 24) & 0x1f;
-			} else {
+			}
+			else {
 				respbuf[0] = mainGame->LocalPlayer(1);
 				respbuf[1] = LOCATION_SZONE;
 				filter = (mainGame->dField.selectable_field >> 30) & 0x3;
 				pzone = 1;
 			}
-			if(!pzone) {
-				if(mainGame->chkRandomPos->isChecked()) {
+			if (!pzone) {
+				if (mainGame->chkRandomPos->isChecked()) {
 					do {
 						respbuf[2] = rnd.real() * 7;
-					} while(!(filter & (1 << respbuf[2])));
-				} else {
+					} while (!(filter & (1 << respbuf[2])));
+				}
+				else {
 					if (filter & 0x40) respbuf[2] = 6;
 					else if (filter & 0x20) respbuf[2] = 5;
 					else if (filter & 0x4) respbuf[2] = 2;
@@ -2013,7 +2027,8 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 					else if (filter & 0x1) respbuf[2] = 0;
 					else if (filter & 0x10) respbuf[2] = 4;
 				}
-			} else {
+			}
+			else {
 				if (filter & 0x1) respbuf[2] = 6;
 				else if (filter & 0x2) respbuf[2] = 7;
 			}
@@ -2021,6 +2036,9 @@ int DuelClient::ClientAnalyze(char * msg, unsigned int len) {
 			SetResponseB(respbuf, 3);
 			DuelClient::SendResponse();
 			return true;
+		}
+		if (mainGame->dField.select_cancelable) {
+			mainGame->dField.ShowCancelOrFinishButton(1);
 		}
 		return false;
 	}

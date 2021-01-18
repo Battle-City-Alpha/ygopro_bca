@@ -1,0 +1,28 @@
+﻿  buffer.c
+  buffer_iocp.c
+  bufferevent.c
+  bufferevent_async.c
+  bufferevent_filter.c
+  bufferevent_pair.c
+  bufferevent_ratelim.c
+  bufferevent_sock.c
+  evdns.c
+  event.c
+  event_iocp.c
+  event_tagging.c
+  evmap.c
+  evrpc.c
+  evthread.c
+  evthread_win32.c
+  evutil.c
+  evutil_rand.c
+  http.c
+  listener.c
+  Génération de code en cours...
+  Compilation en cours...
+  log.c
+  signal.c
+  strlcpy.c
+  win32select.c
+  Génération de code en cours...
+  event.vcxproj -> D:\Battle City Alpha 2.0\Codes\V2\ygopro_bca\build\..\bin\release\event.lib
