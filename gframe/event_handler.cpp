@@ -1363,7 +1363,8 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 							selectable_field = 0;
 							selected_field = 0;
 							DuelClient::SetResponseB(respbuf, p);
-							DuelClient::SendResponse();
+							DuelClient::SendResponse(); 
+							ShowCancelOrFinishButton(0);
 						}
 					}
 				}
@@ -2588,6 +2589,19 @@ void ClientField::CancelOrFinish() {
 		if(mainGame->wCardSelect->isVisible()) {
 			DuelClient::SetResponseI(-1);
 			mainGame->HideElement(mainGame->wCardSelect, true);
+		}
+		break;
+	}
+	case MSG_SELECT_PLACE: {
+		if (select_cancelable) {
+			unsigned char respbuf[3];
+			respbuf[0] = mainGame->LocalPlayer(0);
+			respbuf[1] = 0;
+			respbuf[2] = 0;
+			mainGame->dField.selectable_field = 0;
+			DuelClient::SetResponseB(respbuf, 3);
+			DuelClient::SendResponse();
+			ShowCancelOrFinishButton(0);
 		}
 		break;
 	}

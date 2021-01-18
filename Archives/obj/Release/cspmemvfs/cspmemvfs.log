@@ -1,5 +1,0 @@
-﻿  spmemvfs.c
-D:\Battle City Alpha 2.0\Codes\V2\ygopro_bca\gframe\spmemvfs\spmemvfs.c(156,53): warning C4244: '=' : conversion de 'sqlite3_int64' en 'int', perte possible de données
-D:\Battle City Alpha 2.0\Codes\V2\ygopro_bca\gframe\spmemvfs\spmemvfs.c(144,1): warning C4244: 'initialisation' : conversion de 'sqlite3_int64' en 'int', perte possible de données
-D:\Battle City Alpha 2.0\Codes\V2\ygopro_bca\gframe\spmemvfs\spmemvfs.c(167,63): warning C4244: '=' : conversion de 'sqlite3_int64' en 'int', perte possible de données
-  cspmemvfs.vcxproj -> D:\Battle City Alpha 2.0\Codes\V2\ygopro_bca\build\..\bin\release\cspmemvfs.lib
